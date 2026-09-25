@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tcm-agent"
+version = "0.1.0"
+description = "中医AI问诊与查询Agent（基于pydantic-ai + 分级Markdown知识库）"
+requires-python = ">=3.10"
+dependencies = [
+    "pydantic-ai>=1.0",
+    "pydantic>=2.7",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+tcm = "tcm_agent.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["tcm_agent*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-m 'not llm'"
+markers = ["llm: 需要真实LLM API的集成测试（python -m pytest -m llm）"]

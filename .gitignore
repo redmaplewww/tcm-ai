@@ -1,0 +1,29 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# 测试与缓存
+.pytest_cache/
+.coverage
+htmlcov/
+
+# 临时文件
+*.tmp
+_check*
+_line*
+_l141*
+
+# IDE / 系统
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# 本地环境配置（含密钥的本地覆盖）
+.env
+*.local.json

@@ -1,0 +1,1172 @@
+[
+  {
+    "name": "中府",
+    "code": "LU1",
+    "meridian": "手太阴肺经",
+    "location": "胸前壁外上方，前正中线旁开6寸，平第1肋间隙",
+    "indications": ["咳嗽", "气喘", "胸痛", "肩背痛"],
+    "method": "向外斜刺0.5~0.8寸",
+    "pregnancy_caution": false,
+    "caution_notes": "肺之募穴；不可向内深刺，防气胸"
+  },
+  {
+    "name": "云门",
+    "code": "LU2",
+    "meridian": "手太阴肺经",
+    "location": "锁骨下窝凹陷中，前正中线旁开6寸",
+    "indications": ["咳嗽", "胸痛", "肩痛"],
+    "method": "向外斜刺0.5~0.8寸",
+    "pregnancy_caution": false,
+    "caution_notes": "不可向内深刺，防气胸"
+  },
+  {
+    "name": "尺泽",
+    "code": "LU5",
+    "meridian": "手太阴肺经",
+    "location": "肘横纹上，肱二头肌腱桡侧缘凹陷处",
+    "indications": ["咳嗽", "咯血", "潮热", "咽喉肿痛", "急性吐泻", "肘臂挛痛"],
+    "method": "直刺0.8~1.2寸，或点刺出血",
+    "pregnancy_caution": false,
+    "caution_notes": "肺经合穴，实热证宜点刺放血"
+  },
+  {
+    "name": "孔最",
+    "code": "LU6",
+    "meridian": "手太阴肺经",
+    "location": "前臂外侧，腕掌侧远端横纹上7寸，尺泽与太渊连线上",
+    "indications": ["咯血", "咳嗽", "气喘", "痔疮出血", "肘臂挛痛"],
+    "method": "直刺0.5~1寸",
+    "pregnancy_caution": false,
+    "caution_notes": "郄穴，主肺经急症出血"
+  },
+  {
+    "name": "列缺",
+    "code": "LU7",
+    "meridian": "手太阴肺经",
+    "location": "腕掌侧远端横纹上1.5寸，拇短伸肌腱与拇长展肌腱之间；两手虎口交叉食指尖尽处",
+    "indications": ["头痛", "颈项强痛", "咳嗽", "气喘", "咽喉痛", "口眼㖞斜"],
+    "method": "向肘部斜刺0.5~0.8寸",
+    "pregnancy_caution": false,
+    "caution_notes": "络穴，通任脉；八脉交会穴；'头项寻列缺'"
+  },
+  {
+    "name": "鱼际",
+    "code": "LU10",
+    "meridian": "手太阴肺经",
+    "location": "第1掌骨桡侧中点，赤白肉际处",
+    "indications": ["咽喉肿痛", "发热", "咳嗽", "失音"],
+    "method": "直刺0.3~0.5寸",
+    "pregnancy_caution": false,
+    "caution_notes": "荥穴主热"
+  },
+  {
+    "name": "少商",
+    "code": "LU11",
+    "meridian": "手太阴肺经",
+    "location": "拇指末节桡侧，指甲根角侧上方0.1寸",
+    "indications": ["咽喉肿痛", "发热", "昏迷", "癫狂", "指端麻木"],
+    "method": "浅刺0.1寸或点刺出血",
+    "pregnancy_caution": false,
+    "caution_notes": "井穴，热病咽痛急救点刺出血"
+  },
+  {
+    "name": "商阳",
+    "code": "LI1",
+    "meridian": "手阳明大肠经",
+    "location": "食指末节桡侧，指甲根角侧上方0.1寸",
+    "indications": ["咽喉肿痛", "齿痛", "耳聋", "热病昏迷", "手指麻木"],
+    "method": "浅刺0.1寸或点刺出血",
+    "pregnancy_caution": false,
+    "caution_notes": "井穴"
+  },
+  {
+    "name": "合谷",
+    "code": "LI4",
+    "meridian": "手阳明大肠经",
+    "location": "手背第1、2掌骨之间，第2掌骨桡侧中点处（虎口）",
+    "indications": ["头痛", "齿痛", "面瘫", "面肿", "目赤", "鼻衄", "咽喉痛", "发热恶寒", "无汗多汗", "经闭", "滞产", "腹痛便秘"],
+    "method": "直刺0.5~1寸，可透劳宫（透穴须医师操作）",
+    "pregnancy_caution": true,
+    "caution_notes": "孕妇禁针；可灸；针刺不可伤及动脉；体质虚弱者强刺激可致晕针；'面口合谷收'，四总穴之一，镇痛要穴"
+  },
+  {
+    "name": "曲池",
+    "code": "LI11",
+    "meridian": "手阳明大肠经",
+    "location": "屈肘成直角，肘横纹外侧端与肱骨外上髁连线中点",
+    "indications": ["热病", "咽喉痛", "齿痛", "目赤痛", "瘾疹", "湿疹", "瘰疬", "上肢不遂", "手臂肿痛", "腹痛吐泻", "高血压", "癫狂"],
+    "method": "直刺1~1.5寸",
+    "pregnancy_caution": false,
+    "caution_notes": "合穴，清热要穴、过敏性疾病常用"
+  },
+  {
+    "name": "肩髃",
+    "code": "LI15",
+    "meridian": "手阳明大肠经",
+    "location": "三角肌上缘，臂外展或前平举时肩峰前下方凹陷处",
+    "indications": ["肩臂挛痛", "上肢不遂", "瘾疹", "瘰疬"],
+    "method": "直刺或向下斜刺0.8~1.5寸",
+    "pregnancy_caution": false,
+    "caution_notes": ""
+  },
+  {
+    "name": "迎香",
+    "code": "LI20",
+    "meridian": "手阳明大肠经",
+    "location": "鼻翼外缘中点旁，鼻唇沟中",
+    "indications": ["鼻塞", "鼻衄", "口眼㖞斜", "面痒", "胆道蛔虫症"],
+    "method": "斜刺或平刺0.3~0.5寸",
+    "pregnancy_caution": false,
+    "caution_notes": "不宜灸（面部）；胆道蛔虫症可迎香透四白"
+  },
+  {
+    "name": "四白",
+    "code": "ST2",
+    "meridian": "足阳明胃经",
+    "location": "面部，眶下孔处，目正视瞳孔直下",
+    "indications": ["目赤痛痒", "目翳", "眼睑瞤动", "口眼㖞斜", "头痛眩晕", "面痛（三叉神经痛）"],
+    "method": "直刺或斜刺0.3~0.5寸",
+    "pregnancy_caution": false,
+    "caution_notes": "不可深刺入眶"
+  },
+  {
+    "name": "下关",
+    "code": "ST7",
+    "meridian": "足阳明胃经",
+    "location": "面部，颧弓下缘中央与下颌切迹之间凹陷处（闭口取穴）",
+    "indications": ["耳聋", "耳鸣", "聤耳", "齿痛", "口噤", "面痛"],
+    "method": "直刺0.5~1寸",
+    "pregnancy_caution": false,
+    "caution_notes": "张口时穴位关闭，须闭口取穴"
+  },
+  {
+    "name": "颊车",
+    "code": "ST6",
+    "meridian": "足阳明胃经",
+    "location": "下颌角前上方一横指，咬肌隆起处（咀嚼时按压有凹陷）",
+    "indications": ["口眼㖞斜", "齿痛", "颊肿", "口噤不语"],
+    "method": "直刺0.3~0.5寸，或向地仓透刺",
+    "pregnancy_caution": false,
+    "caution_notes": ""
+  },
+  {
+    "name": "地仓",
+    "code": "ST4",
+    "meridian": "足阳明胃经",
+    "location": "口角旁开0.4寸（瞳孔直下）",
+    "indications": ["口眼㖞斜", "流涎", "眼睑瞤动", "齿痛颊肿"],
+    "method": "斜刺或平刺0.5~0.8寸，可透颊车",
+    "pregnancy_caution": false,
+    "caution_notes": ""
+  },
+  {
+    "name": "天枢",
+    "code": "ST25",
+    "meridian": "足阳明胃经",
+    "location": "腹部，脐中旁开2寸",
+    "indications": ["腹痛", "腹胀", "肠鸣泄泻", "便秘", "痢疾", "月经不调", "痛经"],
+    "method": "直刺1~1.5寸",
+    "pregnancy_caution": true,
+    "caution_notes": "孕妇慎用；大肠募穴，双向调节肠功能（止泻通便）"
+  },
+  {
+    "name": "梁丘",
+    "code": "ST34",
+    "meridian": "足阳明胃经",
+    "location": "大腿前面，髌底上2寸，股外侧肌与股直肌肌腱之间",
+    "indications": ["急性胃痛", "膝肿痛", "下肢不遂", "乳痈", "血尿"],
+    "method": "直刺1~1.5寸",
+    "pregnancy_caution": false,
+    "caution_notes": "郄穴，主急性胃痛"
+  },
+  {
+    "name": "足三里",
+    "code": "ST36",
+    "meridian": "足阳明胃经",
+    "location": "小腿前外侧，犊鼻下3寸，胫骨前嵴外一横指",
+    "indications": ["胃痛", "呕吐", "腹胀", "泄泻", "便秘", "疳积", "虚劳羸瘦", "下肢痿痹", "心悸气短", "癫狂"],
+    "method": "直刺1~2寸；强壮保健常用温和灸",
+    "pregnancy_caution": true,
+    "caution_notes": "孕妇慎针慎灸（有激发宫缩的报道）；'肚腹三里留'；保健强壮要穴，实验研究可调节免疫、胃肠、血压、血糖"
+  },
+  {
+    "name": "条口",
+    "code": "ST38",
+    "meridian": "足阳明胃经",
+    "location": "小腿前外侧，犊鼻下8寸，胫骨前嵴外一横指",
+    "indications": ["下肢痿痹", "转筋", "跗肿", "肩臂痛"],
+    "method": "直刺1~1.5寸",
+    "pregnancy_caution": false,
+    "caution_notes": "'条口透承山'治肩周炎"
+  },
+  {
+    "name": "上巨虚",
+    "code": "ST37",
+    "meridian": "足阳明胃经",
+    "location": "犊鼻下6寸，胫骨前嵴外一横指",
+    "indications": ["肠鸣", "腹痛", "泄泻", "便秘", "肠痈", "下肢痿痹"],
+    "method": "直刺1~2寸",
+    "pregnancy_caution": false,
+    "caution_notes": "大肠下合穴"
+  },
+  {
+    "name": "下巨虚",
+    "code": "ST39",
+    "meridian": "足阳明胃经",
+    "location": "犊鼻下9寸，胫骨前嵴外一横指",
+    "indications": ["泄泻", "痢疾", "小腹痛", "腰脊痛引睾丸", "乳痈", "下肢痿痹"],
+    "method": "直刺1~1.5寸",
+    "pregnancy_caution": false,
+    "caution_notes": "小肠下合穴"
+  },
+  {
+    "name": "丰隆",
+    "code": "ST40",
+    "meridian": "足阳明胃经",
+    "location": "外踝尖上8寸，胫骨前嵴外二横指",
+    "indications": ["痰多咳嗽", "眩晕", "头痛", "癫狂痫", "中风痰阻", "下肢痿痹"],
+    "method": "直刺1~1.5寸",
+    "pregnancy_caution": false,
+    "caution_notes": "化痰要穴；络穴，通脾经，治'无形之痰'（高脂血症、肥胖辅助）"
+  },
+  {
+    "name": "内庭",
+    "code": "ST44",
+    "meridian": "足阳明胃经",
+    "location": "足背第2、3趾间，趾蹼缘上方赤白肉际处",
+    "indications": ["齿痛", "咽喉肿痛", "口眼㖞斜", "鼻衄", "胃病吐酸", "腹胀", "泄泻", "痢疾", "便秘", "热病", "足背肿痛"],
+    "method": "直刺或斜刺0.3~0.5寸",
+    "pregnancy_caution": false,
+    "caution_notes": "荥穴，清胃热，胃火牙痛首选"
+  },
+  {
+    "name": "隐白",
+    "code": "SP1",
+    "meridian": "足太阴脾经",
+    "location": "足大趾末节内侧，趾甲根角侧后方0.1寸",
+    "indications": ["腹胀", "便血", "尿血", "月经过多", "崩漏", "癫狂", "多梦", "惊风"],
+    "method": "浅刺0.1寸或点刺出血；崩漏用麦粒灸",
+    "pregnancy_caution": false,
+    "caution_notes": "井穴；灸隐白治崩漏（功能性子宫出血）经验效穴"
+  },
+  {
+    "name": "太白",
+    "code": "SP3",
+    "meridian": "足太阴脾经",
+    "location": "足内侧，第1跖趾关节近端赤白肉际凹陷处",
+    "indications": ["胃痛", "腹胀", "肠鸣", "泄泻", "便秘", "痔漏", "脚气", "体重节痛"],
+    "method": "直刺0.5~0.8寸",
+    "pregnancy_caution": false,
+    "caution_notes": "输穴兼原穴"
+  },
+  {
+    "name": "公孙",
+    "code": "SP4",
+    "meridian": "足太阴脾经",
+    "location": "足内侧，第1跖骨基底部前下缘赤白肉际处",
+    "indications": ["胃痛", "呕吐", "腹痛", "泄泻", "痢疾"],
+    "method": "直刺0.5~0.8寸",
+    "pregnancy_caution": false,
+    "caution_notes": "络穴，八脉交会穴通冲脉，配内关治胃心胸病症（孕吐、心绞痛辅助）"
+  },
+  {
+    "name": "三阴交",
+    "code": "SP6",
+    "meridian": "足太阴脾经",
+    "location": "小腿内侧，内踝尖上3寸，胫骨内侧缘后际",
+    "indications": ["肠鸣腹胀", "泄泻", "月经不调", "带下", "阴挺", "不孕", "滞产", "遗精阳痿", "遗尿", "小便不利", "水肿", "失眠", "湿疹", "下肢痿痹"],
+    "method": "直刺1~1.5寸",
+    "pregnancy_caution": true,
+    "caution_notes": "孕妇禁针（针刺可诱发宫缩，古籍列为禁针）；足三阴经交会穴，妇科要穴"
+  },
+  {
+    "name": "地机",
+    "code": "SP8",
+    "meridian": "足太阴脾经",
+    "location": "小腿内侧，阴陵泉下3寸，阴陵泉与内踝尖连线上",
+    "indications": ["腹痛", "泄泻", "小便不利", "水肿", "月经不调", "痛经", "遗精"],
+    "method": "直刺1~1.5寸",
+    "pregnancy_caution": true,
+    "caution_notes": "孕妇慎用；郄穴，痛经急性发作要穴"
+  },
+  {
+    "name": "阴陵泉",
+    "code": "SP9",
+    "meridian": "足太阴脾经",
+    "location": "小腿内侧，胫骨内侧髁下缘与胫骨内侧缘之间凹陷处",
+    "indications": ["腹胀", "泄泻", "水肿", "黄疸", "小便不利或失禁", "膝痛"],
+    "method": "直刺1~2寸",
+    "pregnancy_caution": false,
+    "caution_notes": "合穴，利水渗湿要穴"
+  },
+  {
+    "name": "血海",
+    "code": "SP10",
+    "meridian": "足太阴脾经",
+    "location": "股前区，髌底内侧端上2寸，股内侧肌隆起处",
+    "indications": ["月经不调", "痛经", "经闭", "崩漏", "瘾疹", "湿疹", "丹毒", "膝股内侧痛"],
+    "method": "直刺1~1.5寸",
+    "pregnancy_caution": false,
+    "caution_notes": "治血要穴（皮肤病、血热风热）"
+  },
+  {
+    "name": "神门",
+    "code": "HT7",
+    "meridian": "手少阴心经",
+    "location": "腕前区，腕掌侧远端横纹尺侧端，尺侧腕屈肌腱桡侧凹陷处",
+    "indications": ["失眠", "健忘", "心烦", "心悸", "心痛", "癫狂痫", "胸胁痛"],
+    "method": "直刺0.3~0.5寸",
+    "pregnancy_caution": false,
+    "caution_notes": "输穴兼原穴，安神要穴"
+  },
+  {
+    "name": "少冲",
+    "code": "HT9",
+    "meridian": "手少阴心经",
+    "location": "小指末节桡侧，指甲根角侧上方0.1寸",
+    "indications": ["心悸", "心痛", "癫狂", "热病", "昏迷"],
+    "method": "浅刺0.1寸或点刺出血",
+    "pregnancy_caution": false,
+    "caution_notes": "井穴，急救醒神"
+  },
+  {
+    "name": "少泽",
+    "code": "SI1",
+    "meridian": "手太阳小肠经",
+    "location": "小指末节尺侧，指甲根角侧上方0.1寸",
+    "indications": ["乳痈", "乳汁少", "昏迷", "热病", "头痛目翳"],
+    "method": "浅刺0.1寸或点刺出血",
+    "pregnancy_caution": false,
+    "caution_notes": "井穴，通乳经验穴（点刺）"
+  },
+  {
+    "name": "后溪",
+    "code": "SI3",
+    "meridian": "手太阳小肠经",
+    "location": "手内侧，第5掌指关节尺侧近端赤白肉际凹陷中（握拳取穴）",
+    "indications": ["头项强痛", "腰背痛", "目赤", "耳聋", "咽喉肿痛", "癫狂痫", "疟疾", "盗汗"],
+    "method": "直刺0.5~1寸",
+    "pregnancy_caution": false,
+    "caution_notes": "输穴，八脉交会穴通督脉；急性腰扭伤、颈痛要穴"
+  },
+  {
+    "name": "腕骨",
+    "code": "SI4",
+    "meridian": "手太阳小肠经",
+    "location": "腕内侧，第5掌骨底与钩骨之间赤白肉际凹陷处",
+    "indications": ["头项强痛", "耳鸣", "目翳", "黄疸", "消渴", "热病", "指挛腕痛"],
+    "method": "直刺0.3~0.5寸",
+    "pregnancy_caution": false,
+    "caution_notes": "原穴"
+  },
+  {
+    "name": "天宗",
+    "code": "SI11",
+    "meridian": "手太阳小肠经",
+    "location": "肩胛区，冈下窝中央凹陷处",
+    "indications": ["肩胛疼痛", "上肢不遂", "乳痈", "气喘"],
+    "method": "直刺或斜刺0.5~1寸",
+    "pregnancy_caution": false,
+    "caution_notes": "落枕、肩背筋膜炎常用"
+  },
+  {
+    "name": "听宫",
+    "code": "SI19",
+    "meridian": "手太阳小肠经",
+    "location": "面部，耳屏正中与下颌骨髁突之间凹陷处（张口取穴）",
+    "indications": ["耳鸣", "耳聋", "聤耳", "齿痛", "癫狂痫"],
+    "method": "张口，直刺0.5~1寸",
+    "pregnancy_caution": false,
+    "caution_notes": "须张口取穴"
+  },
+  {
+    "name": "睛明",
+    "code": "BL1",
+    "meridian": "足太阳膀胱经",
+    "location": "面部，目内眦内上方眶内侧壁凹陷中",
+    "indications": ["目赤肿痛", "流泪", "视物不明", "目眩", "近视", "夜盲", "色盲"],
+    "method": "闭目，医者左手轻推眼球向外侧固定，沿眼眶边缘缓慢直刺0.3~0.5寸，不捻转、不提插（或极轻微），出针后按压1~2分钟防出血",
+    "pregnancy_caution": false,
+    "caution_notes": "眼病要穴；禁灸；眼区操作须由熟练医师进行"
+  },
+  {
+    "name": "攒竹",
+    "code": "BL2",
+    "meridian": "足太阳膀胱经",
+    "location": "眉头凹陷中，眶上切迹处",
+    "indications": ["头痛", "眉棱骨痛", "眼睑瞤动", "眼睑下垂", "口眼㖞斜", "目视不明", "呃逆（按压）"],
+    "method": "平刺或斜刺0.3~0.5寸",
+    "pregnancy_caution": false,
+    "caution_notes": "禁灸"
+  },
+  {
+    "name": "风门",
+    "code": "BL12",
+    "meridian": "足太阳膀胱经",
+    "location": "背部，第2胸椎棘突下（T2）旁开1.5寸",
+    "indications": ["伤风咳嗽", "发热头痛", "鼻塞", "项强", "胸背痛"],
+    "method": "斜刺0.5~0.8寸",
+    "pregnancy_caution": false,
+    "caution_notes": "防气胸，忌深刺、忌向上斜刺过深；感冒要穴，灸之预防感冒"
+  },
+  {
+    "name": "肺俞",
+    "code": "BL13",
+    "meridian": "足太阳膀胱经",
+    "location": "背部，第3胸椎棘突下（T3）旁开1.5寸",
+    "indications": ["咳嗽", "气喘", "咯血", "骨蒸潮热", "盗汗", "鼻塞", "荨麻疹", "痤疮"],
+    "method": "斜刺0.5~0.8寸",
+    "pregnancy_caution": false,
+    "caution_notes": "防气胸；肺之背俞，咳喘、三伏贴常用"
+  },
+  {
+    "name": "膏肓",
+    "code": "BL43",
+    "meridian": "足太阳膀胱经",
+    "location": "背部，第4胸椎棘突下（T4）旁开3寸",
+    "indications": ["咳嗽", "气喘", "肺痨", "健忘", "遗精", "盗汗", "虚劳羸瘦"],
+    "method": "斜刺0.5~0.8寸",
+    "pregnancy_caution": false,
+    "caution_notes": "防气胸；一切虚损诸证，灸法常用"
+  },
+  {
+    "name": "心俞",
+    "code": "BL15",
+    "meridian": "足太阳膀胱经",
+    "location": "背部，第5胸椎棘突下（T5）旁开1.5寸",
+    "indications": ["心痛", "惊悸", "失眠", "健忘", "癫痫", "咳嗽", "吐血", "遗精", "盗汗"],
+    "method": "斜刺0.5~0.8寸",
+    "pregnancy_caution": false,
+    "caution_notes": "防气胸；心之背俞"
+  },
+  {
+    "name": "肝俞",
+    "code": "BL18",
+    "meridian": "足太阳膀胱经",
+    "location": "背部，第9胸椎棘突下（T9）旁开1.5寸",
+    "indications": ["胁痛", "黄疸", "目赤", "目视不明", "夜盲", "迎风流泪", "癫狂痫", "脊背痛"],
+    "method": "斜刺0.5~0.8寸",
+    "pregnancy_caution": false,
+    "caution_notes": "肝之背俞，肝病、眼病常用"
+  },
+  {
+    "name": "胆俞",
+    "code": "BL19",
+    "meridian": "足太阳膀胱经",
+    "location": "背部，第10胸椎棘突下（T10）旁开1.5寸",
+    "indications": ["黄疸", "口苦", "胁痛", "肺痨", "潮热"],
+    "method": "斜刺0.5~0.8寸",
+    "pregnancy_caution": false,
+    "caution_notes": "胆之背俞"
+  },
+  {
+    "name": "脾俞",
+    "code": "BL20",
+    "meridian": "足太阳膀胱经",
+    "location": "背部，第11胸椎棘突下（T11）旁开1.5寸",
+    "indications": ["腹胀", "黄疸", "呕吐", "泄泻", "痢疾", "便血", "水肿", "背痛", "贫血", "出血性疾病"],
+    "method": "斜刺0.5~0.8寸",
+    "pregnancy_caution": false,
+    "caution_notes": "脾之背俞，健脾化湿要穴"
+  },
+  {
+    "name": "胃俞",
+    "code": "BL21",
+    "meridian": "足太阳膀胱经",
+    "location": "背部，第12胸椎棘突下（T12）旁开1.5寸",
+    "indications": ["胃脘痛", "呕吐", "腹胀", "肠鸣", "胸胁痛"],
+    "method": "斜刺0.5~0.8寸",
+    "pregnancy_caution": false,
+    "caution_notes": "胃之背俞"
+  },
+  {
+    "name": "肾俞",
+    "code": "BL23",
+    "meridian": "足太阳膀胱经",
+    "location": "腰部，第2腰椎棘突下（L2）旁开1.5寸",
+    "indications": ["腰痛", "遗尿", "遗精", "阳痿", "月经不调", "带下", "耳鸣耳聋", "水肿", "气喘", "五劳七伤"],
+    "method": "直刺0.5~1寸",
+    "pregnancy_caution": true,
+    "caution_notes": "腰部穴，孕妇慎用（腰骶部为妊娠禁针区）；肾之背俞，补肾要穴，保健灸常用"
+  },
+  {
+    "name": "志室",
+    "code": "BL52",
+    "meridian": "足太阳膀胱经",
+    "location": "腰部，第2腰椎棘突下（L2）旁开3寸",
+    "indications": ["遗精", "阳痿", "小便不利", "水肿", "腰脊强痛"],
+    "method": "直刺0.5~1寸",
+    "pregnancy_caution": true,
+    "caution_notes": "腰部穴，孕妇慎用（腰骶部为妊娠禁针区）"
+  },
+  {
+    "name": "大肠俞",
+    "code": "BL25",
+    "meridian": "足太阳膀胱经",
+    "location": "腰部，第4腰椎棘突下（L4）旁开1.5寸",
+    "indications": ["腰腿痛", "腰扭伤", "腹胀", "泄泻", "便秘", "痢疾"],
+    "method": "直刺0.8~1.5寸",
+    "pregnancy_caution": true,
+    "caution_notes": "腰部穴，孕妇慎用（腰骶部为妊娠禁针区）；大肠之背俞，腰椎间盘突出常用"
+  },
+  {
+    "name": "上髎",
+    "code": "BL31",
+    "meridian": "足太阳膀胱经",
+    "location": "骶部，正对第1骶后孔中",
+    "indications": ["月经不调", "痛经", "带下", "小便不利", "遗精", "阳痿", "疝气", "腰骶痛", "下肢痿痹"],
+    "method": "直刺1~1.5寸",
+    "pregnancy_caution": true,
+    "caution_notes": "骶部穴，孕妇禁针；八髎穴之一，偏重相应盆腔脏器"
+  },
+  {
+    "name": "次髎",
+    "code": "BL32",
+    "meridian": "足太阳膀胱经",
+    "location": "骶部，正对第2骶后孔中（髂后上棘与督脉之间）",
+    "indications": ["月经不调", "痛经", "带下", "小便不利", "遗精", "阳痿", "疝气", "腰骶痛", "下肢痿痹"],
+    "method": "直刺1~1.5寸",
+    "pregnancy_caution": true,
+    "caution_notes": "骶部穴，孕妇禁针；八髎穴代表，妇科与骶尾部痛要穴"
+  },
+  {
+    "name": "中髎",
+    "code": "BL33",
+    "meridian": "足太阳膀胱经",
+    "location": "骶部，正对第3骶后孔中",
+    "indications": ["月经不调", "痛经", "带下", "小便不利", "遗精", "阳痿", "疝气", "腰骶痛", "下肢痿痹"],
+    "method": "直刺1~1.5寸",
+    "pregnancy_caution": true,
+    "caution_notes": "骶部穴，孕妇禁针；八髎穴之一，偏重相应盆腔脏器"
+  },
+  {
+    "name": "下髎",
+    "code": "BL34",
+    "meridian": "足太阳膀胱经",
+    "location": "骶部，正对第4骶后孔中",
+    "indications": ["月经不调", "痛经", "带下", "小便不利", "遗精", "阳痿", "疝气", "腰骶痛", "下肢痿痹"],
+    "method": "直刺1~1.5寸",
+    "pregnancy_caution": true,
+    "caution_notes": "骶部穴，孕妇禁针；八髎穴之一，偏重相应盆腔脏器"
+  },
+  {
+    "name": "委中",
+    "code": "BL40",
+    "meridian": "足太阳膀胱经",
+    "location": "腘横纹中点，股二头肌腱与半腱肌肌腱之间",
+    "indications": ["腰背痛", "下肢痿痹", "中风昏迷", "半身不遂", "腹痛", "吐泻", "小便不利", "遗尿", "丹毒"],
+    "method": "直刺1~1.5寸；点刺腘静脉出血须医师操作",
+    "pregnancy_caution": false,
+    "caution_notes": "合穴；'腰背委中求'；刺络放血治急性腰扭伤、暑热；有出血倾向者禁用刺络"
+  },
+  {
+    "name": "秩边",
+    "code": "BL54",
+    "meridian": "足太阳膀胱经",
+    "location": "骶部，平第4骶后孔，骶正中嵴旁开3寸",
+    "indications": ["腰骶痛", "下肢痿痹", "痔疾", "便秘", "小便不利"],
+    "method": "直刺1.5~3寸（深刺须医师操作）",
+    "pregnancy_caution": true,
+    "caution_notes": "骶部穴，孕妇禁针；深刺治前列腺病"
+  },
+  {
+    "name": "承山",
+    "code": "BL57",
+    "meridian": "足太阳膀胱经",
+    "location": "小腿后区，腓肠肌两肌腹与肌腱交角处（用力伸足，小腿后面出现'人'字凹陷处）",
+    "indications": ["痔疾", "便秘", "腰腿拘急疼痛", "脚气", "小腿转筋"],
+    "method": "直刺1~2寸",
+    "pregnancy_caution": false,
+    "caution_notes": "痔痛要穴"
+  },
+  {
+    "name": "昆仑",
+    "code": "BL60",
+    "meridian": "足太阳膀胱经",
+    "location": "踝区，外踝尖与跟腱之间凹陷中",
+    "indications": ["后头痛", "项强", "腰骶疼痛", "足踝肿痛", "滞产", "癫痫"],
+    "method": "直刺0.5~0.8寸",
+    "pregnancy_caution": true,
+    "caution_notes": "孕妇禁针；经穴；针感强，易晕针，体弱者慎"
+  },
+  {
+    "name": "申脉",
+    "code": "BL62",
+    "meridian": "足太阳膀胱经",
+    "location": "踝区，外踝尖直下方凹陷中",
+    "indications": ["头痛", "眩晕", "癫狂痫", "失眠", "腰腿酸痛", "目赤痛", "项强"],
+    "method": "直刺0.3~0.5寸",
+    "pregnancy_caution": false,
+    "caution_notes": "八脉交会穴通阳跷脉，配后溪治颈项痛、日间发作癫痫"
+  },
+  {
+    "name": "至阴",
+    "code": "BL67",
+    "meridian": "足太阳膀胱经",
+    "location": "足小趾末节外侧，趾甲根角侧后方0.1寸",
+    "indications": ["胎位不正", "滞产", "头痛", "目痛", "鼻塞", "鼻衄"],
+    "method": "浅刺0.1寸；胎位矫正用灸不用针",
+    "pregnancy_caution": true,
+    "caution_notes": "孕妇未经评估禁针；艾灸矫正胎位须孕30周以上在医师指导下进行；井穴"
+  },
+  {
+    "name": "涌泉",
+    "code": "KI1",
+    "meridian": "足少阴肾经",
+    "location": "足底，屈足卷趾时足心最凹陷处（约足底前1/3凹陷处）",
+    "indications": ["顶心头痛", "眩晕", "昏厥", "癫狂", "小儿惊风", "失眠", "便秘", "小便不利", "咽喉肿痛", "足心热"],
+    "method": "直刺0.5~0.8寸（针刺较痛）；常用药物贴敷",
+    "pregnancy_caution": false,
+    "caution_notes": "井穴；急救要穴之一（'引火归元'治上实下虚）；吴茱萸粉醋调贴涌泉治口疮、高血压辅助"
+  },
+  {
+    "name": "太溪",
+    "code": "KI3",
+    "meridian": "足少阴肾经",
+    "location": "踝区，内踝尖与跟腱之间凹陷中",
+    "indications": ["头痛目眩", "咽喉肿痛", "齿痛", "耳聋耳鸣", "咳嗽", "咯血", "消渴", "月经不调", "失眠", "遗精", "阳痿", "腰痛", "足跟痛"],
+    "method": "直刺0.5~0.8寸",
+    "pregnancy_caution": false,
+    "caution_notes": "输穴兼原穴，补肾滋阴要穴（口干、咽干、慢性咽炎、足跟痛）"
+  },
+  {
+    "name": "水泉",
+    "code": "KI5",
+    "meridian": "足少阴肾经",
+    "location": "跟区，太溪直下1寸，跟骨结节内侧凹陷处",
+    "indications": ["月经不调", "痛经", "经闭", "阴挺", "小便不利", "目昏花"],
+    "method": "直刺0.3~0.5寸",
+    "pregnancy_caution": false,
+    "caution_notes": "郄穴，妇科急症"
+  },
+  {
+    "name": "照海",
+    "code": "KI6",
+    "meridian": "足少阴肾经",
+    "location": "踝区，内踝尖下1寸，内踝下缘边际凹陷中",
+    "indications": ["咽喉干痛", "目赤肿痛", "月经不调", "痛经", "阴痒", "小便频数", "失眠"],
+    "method": "直刺0.3~0.5寸",
+    "pregnancy_caution": false,
+    "caution_notes": "八脉交会穴通阴跷脉，滋肾利咽安神；配申脉治失眠"
+  },
+  {
+    "name": "复溜",
+    "code": "KI7",
+    "meridian": "足少阴肾经",
+    "location": "小腿内侧，内踝尖上2寸，跟腱前缘",
+    "indications": ["水肿", "腹胀", "泄泻", "盗汗", "热病汗不出", "下肢痿痹"],
+    "method": "直刺0.5~1寸",
+    "pregnancy_caution": false,
+    "caution_notes": "经穴；汗证要穴（配合谷无汗能发汗、有汗能止汗）"
+  },
+  {
+    "name": "筑宾",
+    "code": "KI9",
+    "meridian": "足少阴肾经",
+    "location": "小腿内侧，内踝尖上5寸，比目鱼肌与跟腱之间",
+    "indications": ["癫狂", "痫证", "呕吐涎沫", "疝痛", "小腿内侧痛"],
+    "method": "直刺1~1.5寸",
+    "pregnancy_caution": false,
+    "caution_notes": "阴维脉郄穴，解毒安神（体内排毒辅助）"
+  },
+  {
+    "name": "曲泽",
+    "code": "PC3",
+    "meridian": "手厥阴心包经",
+    "location": "肘前区，肘横纹上，肱二头肌腱尺侧缘凹陷处",
+    "indications": ["心痛", "心悸", "胃痛", "呕血", "呕吐", "热病", "肘臂挛痛"],
+    "method": "直刺1~1.2寸或点刺出血",
+    "pregnancy_caution": false,
+    "caution_notes": "合穴；急性吐泻点刺放血"
+  },
+  {
+    "name": "内关",
+    "code": "PC6",
+    "meridian": "手厥阴心包经",
+    "location": "前臂前区，腕掌侧远端横纹上2寸，掌长肌腱与桡侧腕屈肌腱之间",
+    "indications": ["心痛", "心悸", "胸闷", "胸胁痛", "胃痛", "呕吐", "呃逆", "失眠", "眩晕", "偏头痛", "癫痫", "上肢痹痛"],
+    "method": "直刺0.5~1寸",
+    "pregnancy_caution": false,
+    "caution_notes": "络穴，八脉交会穴通阴维脉；'内关心胸胃'；止呕要穴（晕车、术后恶心呕吐、化疗呕吐均有高质量证据）、冠心病心绞痛辅助、阵发性心动过速"
+  },
+  {
+    "name": "劳宫",
+    "code": "PC8",
+    "meridian": "手厥阴心包经",
+    "location": "掌区，横平第3掌指关节近端，第2、3掌骨之间偏于第3掌骨（握拳屈指时中指尖所指掌心处）",
+    "indications": ["中风昏迷", "中暑", "癫狂痫", "心痛", "口疮", "口臭", "鹅掌风"],
+    "method": "直刺0.3~0.5寸",
+    "pregnancy_caution": false,
+    "caution_notes": "荥穴，清心泻火；中风急救掐按"
+  },
+  {
+    "name": "中冲",
+    "code": "PC9",
+    "meridian": "手厥阴心包经",
+    "location": "中指末端最高点",
+    "indications": ["中风昏迷", "舌强不语", "中暑", "昏厥", "小儿惊风", "热病", "心痛"],
+    "method": "浅刺0.1寸或点刺出血",
+    "pregnancy_caution": false,
+    "caution_notes": "井穴，急救要穴"
+  },
+  {
+    "name": "关冲",
+    "code": "TE1",
+    "meridian": "手少阳三焦经",
+    "location": "无名指末节尺侧，指甲根角侧上方0.1寸",
+    "indications": ["头痛", "目赤", "耳聋", "耳鸣", "咽喉肿痛", "热病", "昏厥"],
+    "method": "浅刺0.1寸或点刺出血",
+    "pregnancy_caution": false,
+    "caution_notes": "井穴"
+  },
+  {
+    "name": "外关",
+    "code": "TE5",
+    "meridian": "手少阳三焦经",
+    "location": "前臂后区，腕背侧远端横纹上2寸，尺骨与桡骨间隙中",
+    "indications": ["热病", "头痛", "颊痛", "目赤肿痛", "耳鸣耳聋", "胁肋痛", "上肢痿痹", "瘰疬"],
+    "method": "直刺0.5~1寸",
+    "pregnancy_caution": false,
+    "caution_notes": "络穴，八脉交会穴通阳维脉；解表清热、疏解少阳（外感、偏头痛、颈肩综合征）"
+  },
+  {
+    "name": "支沟",
+    "code": "TE6",
+    "meridian": "手少阳三焦经",
+    "location": "前臂后区，腕背侧远端横纹上3寸，尺骨与桡骨间隙中",
+    "indications": ["便秘", "耳鸣耳聋", "暴喑", "瘰疬", "胁肋痛", "热病"],
+    "method": "直刺0.5~1寸",
+    "pregnancy_caution": false,
+    "caution_notes": "经穴；通便经验效穴，'支沟通便'"
+  },
+  {
+    "name": "翳风",
+    "code": "TE17",
+    "meridian": "手少阳三焦经",
+    "location": "颈部，耳垂后方，乳突下端前方凹陷中",
+    "indications": ["耳鸣", "耳聋", "口眼㖞斜", "牙关紧闭", "颊肿", "瘰疬"],
+    "method": "直刺0.8~1寸，针感可向耳内放散",
+    "pregnancy_caution": false,
+    "caution_notes": "面瘫、腮腺炎常用"
+  },
+  {
+    "name": "风池",
+    "code": "GB20",
+    "meridian": "足少阳胆经",
+    "location": "颈后区，枕骨之下，胸锁乳突肌上端与斜方肌上端之间的凹陷中",
+    "indications": ["头痛", "眩晕", "目赤肿痛", "鼻渊", "鼻衄", "耳鸣", "颈项强痛", "感冒", "癫痫", "中风", "热病", "疟疾", "颈肩综合征"],
+    "method": "针尖微下，向鼻尖方向斜刺0.8~1.2寸",
+    "pregnancy_caution": false,
+    "caution_notes": "祛风要穴，内风外风皆治，高血压头痛、椎动脉型颈椎病常用；严禁向上深刺或针刺过深（延髓、椎动脉危险区），必须由熟练医师操作"
+  },
+  {
+    "name": "肩井",
+    "code": "GB21",
+    "meridian": "足少阳胆经",
+    "location": "肩上，第7颈椎棘突（大椎）与肩峰最外侧点连线的中点",
+    "indications": ["头项强痛", "肩背疼痛", "上肢不遂", "难产", "乳痈", "乳汁不下", "瘰疬"],
+    "method": "直刺0.3~0.5寸",
+    "pregnancy_caution": true,
+    "caution_notes": "孕妇禁针禁拿；深刺可致气胸，切忌深刺、不可向前内方深刺；颈肩综合征要穴（推拿常用拿肩井）"
+  },
+  {
+    "name": "日月",
+    "code": "GB24",
+    "meridian": "足少阳胆经",
+    "location": "胸部，第7肋间隙，前正中线旁开4寸（乳头直下）",
+    "indications": ["胁肋疼痛", "胀满", "呕吐", "吞酸", "呃逆", "黄疸"],
+    "method": "斜刺或平刺0.5~0.8寸",
+    "pregnancy_caution": false,
+    "caution_notes": "胆之募穴，胆囊疾患配胆囊穴；防气胸，右侧深部为肝胆，忌深刺"
+  },
+  {
+    "name": "带脉",
+    "code": "GB26",
+    "meridian": "足少阳胆经",
+    "location": "侧腹部，第11肋骨游离端垂线与脐水平线交点",
+    "indications": ["月经不调", "赤白带下", "疝气", "腰胁痛"],
+    "method": "直刺0.5~0.8寸",
+    "pregnancy_caution": true,
+    "caution_notes": "侧腹部穴，孕妇慎用；带脉交会穴，妇科带下病、腰腹肥胖（减肥）常用"
+  },
+  {
+    "name": "五枢",
+    "code": "GB27",
+    "meridian": "足少阳胆经",
+    "location": "下腹部，髂前上棘前0.5寸，平脐下3寸水平",
+    "indications": ["带下", "腹痛", "疝气", "便秘", "腰胯痛"],
+    "method": "直刺0.8~1.5寸",
+    "pregnancy_caution": true,
+    "caution_notes": "下腹部穴，孕妇禁针"
+  },
+  {
+    "name": "维道",
+    "code": "GB28",
+    "meridian": "足少阳胆经",
+    "location": "下腹部，髂前上棘前下方，五枢前下0.5寸",
+    "indications": ["带下", "少腹痛", "疝气", "阴挺", "腰胯痛"],
+    "method": "直刺或向前下方斜刺1~1.5寸",
+    "pregnancy_caution": true,
+    "caution_notes": "下腹部穴，孕妇禁针"
+  },
+  {
+    "name": "居髎",
+    "code": "GB29",
+    "meridian": "足少阳胆经",
+    "location": "髋部，髂前上棘与股骨大转子最凸点连线中点",
+    "indications": ["腰腿痹痛", "瘫痪", "足痿", "疝气"],
+    "method": "直刺1~1.5寸",
+    "pregnancy_caution": false,
+    "caution_notes": ""
+  },
+  {
+    "name": "环跳",
+    "code": "GB30",
+    "meridian": "足少阳胆经",
+    "location": "臀部，股骨大转子最凸点与骶管裂孔连线的外1/3与内2/3交点处",
+    "indications": ["腰腿痛", "下肢痿痹", "半身不遂"],
+    "method": "侧卧伸下腿屈上腿，直刺2~3寸",
+    "pregnancy_caution": false,
+    "caution_notes": "坐骨神经痛要穴；针感多为电击样向下肢放散，注意防晕针"
+  },
+  {
+    "name": "风市",
+    "code": "GB31",
+    "meridian": "足少阳胆经",
+    "location": "股部，髌底上7寸，髂胫束后缘（直立垂手中指尖处）",
+    "indications": ["下肢痿痹", "麻木", "遍身瘙痒", "脚气"],
+    "method": "直刺1~2寸",
+    "pregnancy_caution": false,
+    "caution_notes": "简便定位：直立垂手，中指尖所指大腿外侧处"
+  },
+  {
+    "name": "阳陵泉",
+    "code": "GB34",
+    "meridian": "足少阳胆经",
+    "location": "小腿外侧，腓骨头前下方凹陷处",
+    "indications": ["胁痛", "口苦", "呕吐", "黄疸", "下肢痿痹", "膝膑肿痛", "脚气", "肩痛", "小儿惊风"],
+    "method": "直刺1~1.5寸",
+    "pregnancy_caution": false,
+    "caution_notes": "合穴、筋会——'筋病灸阳陵'，筋脉病（扭伤、痉挛、半身不遂痉挛期）要穴"
+  },
+  {
+    "name": "光明",
+    "code": "GB37",
+    "meridian": "足少阳胆经",
+    "location": "小腿外侧，外踝尖上5寸，腓骨前缘",
+    "indications": ["目痛", "夜盲", "目视不明", "乳房胀痛", "下肢痿痹"],
+    "method": "直刺1~1.5寸",
+    "pregnancy_caution": false,
+    "caution_notes": "络穴（眼科配穴）"
+  },
+  {
+    "name": "悬钟",
+    "code": "GB39",
+    "meridian": "足少阳胆经",
+    "location": "小腿外侧，外踝尖上3寸，腓骨前缘",
+    "indications": ["项强", "胸胁胀痛", "下肢痿痹", "咽喉肿痛", "脚气", "痔疾"],
+    "method": "直刺0.8~1寸",
+    "pregnancy_caution": false,
+    "caution_notes": "又名绝骨；髓会，中风后遗症、颈椎病常用"
+  },
+  {
+    "name": "丘墟",
+    "code": "GB40",
+    "meridian": "足少阳胆经",
+    "location": "踝区，外踝前下方，趾长伸肌腱外侧凹陷中",
+    "indications": ["颈项痛", "胸胁痛", "下肢痿痹", "外踝肿痛", "疟疾"],
+    "method": "直刺0.5~0.8寸",
+    "pregnancy_caution": false,
+    "caution_notes": "原穴；踝扭伤常用"
+  },
+  {
+    "name": "行间",
+    "code": "LR2",
+    "meridian": "足厥阴肝经",
+    "location": "足背，第1、2趾之间，趾蹼缘上方赤白肉际处",
+    "indications": ["头痛", "目眩", "目赤肿痛", "青盲", "口眼㖞斜", "胁痛", "疝气", "小便不利", "痛经", "月经不调", "中风", "癫痫", "失眠", "高血压头痛"],
+    "method": "直刺或斜刺0.3~0.5寸",
+    "pregnancy_caution": false,
+    "caution_notes": "荥穴；肝火头痛要穴"
+  },
+  {
+    "name": "太冲",
+    "code": "LR3",
+    "meridian": "足厥阴肝经",
+    "location": "足背，第1、2跖骨之间，跖骨底结合部前方凹陷中",
+    "indications": ["头痛", "眩晕", "目赤肿痛", "口眼㖞斜", "胁痛", "遗尿", "疝气", "月经不调", "癫痫", "呕逆", "小儿惊风", "下肢痿痹", "高血压"],
+    "method": "直刺0.5~0.8寸",
+    "pregnancy_caution": false,
+    "caution_notes": "输穴兼原穴；配百会、内关治肝阳上亢高血压、失眠、易怒；合谷+太冲='开四关'，行气解郁止痛"
+  },
+  {
+    "name": "章门",
+    "code": "LR13",
+    "meridian": "足厥阴肝经",
+    "location": "侧腹部，第11肋骨游离端下方",
+    "indications": ["腹胀", "泄泻", "胁痛", "痞块"],
+    "method": "直刺0.8~1寸",
+    "pregnancy_caution": true,
+    "caution_notes": "侧腹部穴，孕妇慎针；右侧深部为肝、右肾，忌深刺；脾之募穴、脏会"
+  },
+  {
+    "name": "期门",
+    "code": "LR14",
+    "meridian": "足厥阴肝经",
+    "location": "胸部，第6肋间隙，前正中线旁开4寸（乳头直下）",
+    "indications": ["胸胁胀痛", "腹胀", "呕吐", "乳痈"],
+    "method": "斜刺或平刺0.5~0.8寸",
+    "pregnancy_caution": false,
+    "caution_notes": "肝之募穴；肝气郁结、乳腺增生、经前综合征常用；防气胸，忌深刺"
+  },
+  {
+    "name": "鸠尾",
+    "code": "CV15",
+    "meridian": "任脉",
+    "location": "上腹部，剑胸结合部下1寸（脐上7寸）",
+    "indications": ["心痛", "心悸", "癫狂痫", "胸满", "咳喘"],
+    "method": "斜向下刺0.4~0.6寸",
+    "pregnancy_caution": true,
+    "caution_notes": "任脉络穴；剑突下深部为肝脏，严禁深刺、不可向上刺；上腹部穴，妊娠3个月以上者不宜针刺"
+  },
+  {
+    "name": "中脘",
+    "code": "CV12",
+    "meridian": "任脉",
+    "location": "上腹部，脐中上4寸",
+    "indications": ["胃痛", "腹胀", "呕逆", "吞酸", "纳呆", "泄泻", "黄疸", "癫狂", "失眠"],
+    "method": "直刺1~1.5寸",
+    "pregnancy_caution": true,
+    "caution_notes": "孕妇3个月以上慎用；肝脾肿大者慎深刺；胃之募穴、腑会，一切腑病尤以胃病要穴；配足三里、内关治胃痛呕吐"
+  },
+  {
+    "name": "膻中",
+    "code": "CV17",
+    "meridian": "任脉",
+    "location": "前正中线上，横平第4肋间隙（两乳头连线中点）",
+    "indications": ["咳嗽", "气喘", "胸痛", "心悸", "乳汁少", "呕逆"],
+    "method": "平刺0.3~0.5寸（针尖向下）",
+    "pregnancy_caution": false,
+    "caution_notes": "心包募穴、气会——'气病擅膻中'，气滞胸闷、产后乳少、噎膈；不可直刺过深"
+  },
+  {
+    "name": "神阙",
+    "code": "CV8",
+    "meridian": "任脉",
+    "location": "脐中央",
+    "indications": ["中风虚脱", "四肢厥冷", "腹痛", "泄泻", "脱肛", "水肿", "小便不利"],
+    "method": "禁止针刺；隔盐灸、艾条灸、药物贴敷",
+    "pregnancy_caution": true,
+    "caution_notes": "禁针，宜灸（隔盐灸回阳固脱治寒性泄泻、虚脱）；妊娠期腹部不宜施灸"
+  },
+  {
+    "name": "气海",
+    "code": "CV6",
+    "meridian": "任脉",
+    "location": "下腹部，脐中下1.5寸",
+    "indications": ["腹痛", "泄泻", "便秘", "遗尿", "疝气", "遗精", "阳痿", "月经不调", "痛经", "闭经", "崩漏", "虚脱", "形体羸瘦"],
+    "method": "直刺1~1.5寸",
+    "pregnancy_caution": true,
+    "caution_notes": "孕妇禁针禁灸；'气海一穴暖全身'，益气培元要穴（保健灸常用）"
+  },
+  {
+    "name": "关元",
+    "code": "CV4",
+    "meridian": "任脉",
+    "location": "下腹部，脐中下3寸",
+    "indications": ["中风脱证", "虚劳羸瘦", "遗精", "阳痿", "疝气", "遗尿", "小便频数", "月经不调", "痛经", "闭经", "崩漏", "带下", "不孕", "泄泻"],
+    "method": "直刺1~1.5寸",
+    "pregnancy_caution": true,
+    "caution_notes": "孕妇禁针禁灸；小肠募穴，培元固本、回阳救逆第一要穴，保健灸（冬灸关元）常用"
+  },
+  {
+    "name": "中极",
+    "code": "CV3",
+    "meridian": "任脉",
+    "location": "下腹部，脐中下4寸",
+    "indications": ["小便不利", "遗尿", "遗精", "阳痿", "月经不调", "崩漏", "阴挺", "带下", "不孕"],
+    "method": "直刺1~1.5寸（排空膀胱后针）",
+    "pregnancy_caution": true,
+    "caution_notes": "孕妇禁针禁灸；膀胱募穴，尿潴留、膀胱功能失调常用；针前须排空膀胱或叩诊确认膀胱底"
+  },
+  {
+    "name": "腰阳关",
+    "code": "GV3",
+    "meridian": "督脉",
+    "location": "腰部，后正中线上，第4腰椎棘突下凹陷中",
+    "indications": ["腰骶疼痛", "下肢痿痹", "月经不调", "遗精", "阳痿"],
+    "method": "向上斜刺0.5~1寸",
+    "pregnancy_caution": true,
+    "caution_notes": "腰骶部穴，孕妇禁针"
+  },
+  {
+    "name": "命门",
+    "code": "GV4",
+    "meridian": "督脉",
+    "location": "腰部，后正中线上，第2腰椎棘突下凹陷中",
+    "indications": ["腰脊强痛", "遗尿", "尿频", "遗精", "阳痿", "早泄", "月经不调", "带下", "泄泻"],
+    "method": "向上斜刺0.5~1寸",
+    "pregnancy_caution": true,
+    "caution_notes": "孕妇禁针禁灸（腰部穴）；温肾壮阳要穴（命门火衰诸证，灸法常用）"
+  },
+  {
+    "name": "大椎",
+    "code": "GV14",
+    "meridian": "督脉",
+    "location": "背部，后正中线上，第7颈椎棘突下凹陷中",
+    "indications": ["热病", "疟疾", "咳嗽", "气喘", "骨蒸盗汗", "癫痫", "头痛项强", "感冒", "风疹", "痤疮"],
+    "method": "向上斜刺0.5~1寸",
+    "pregnancy_caution": false,
+    "caution_notes": "严禁深刺（颈髓危险区）；诸阳之会，退热要穴，督脉与手足三阳交会"
+  },
+  {
+    "name": "百会",
+    "code": "GV20",
+    "meridian": "督脉",
+    "location": "头部，前发际正中直上5寸（两耳尖连线与头正中线交点）",
+    "indications": ["头痛", "眩晕", "失眠", "健忘", "中风失语", "癫狂痫", "脱肛", "阴挺", "久泻"],
+    "method": "平刺0.5~0.8寸",
+    "pregnancy_caution": false,
+    "caution_notes": "升阳举陷治脏器下垂；高血压肝阳上亢可泻法/放血，低血压气虚下陷可灸"
+  },
+  {
+    "name": "印堂",
+    "code": "GV29",
+    "meridian": "督脉",
+    "location": "头部，两眉内侧端中间凹陷中",
+    "indications": ["头痛", "眩晕", "鼻衄", "鼻渊", "失眠", "小儿惊风", "子痫", "三叉神经第一支痛"],
+    "method": "提捏局部皮肤，向下平刺0.3~0.5寸",
+    "pregnancy_caution": false,
+    "caution_notes": "2021版GB/T 12346归入督脉"
+  },
+  {
+    "name": "水沟",
+    "code": "GV26",
+    "meridian": "督脉",
+    "location": "面部，人中沟上1/3与下2/3交点处",
+    "indications": ["昏迷", "晕厥", "中风", "中暑", "癫狂痫", "小儿惊风", "休克", "呼吸衰竭", "面肿", "腰脊强痛"],
+    "method": "向上斜刺0.3~0.5寸，或指甲掐按；强刺激醒神",
+    "pregnancy_caution": false,
+    "caution_notes": "又名人中；急救第一要穴；急性腰扭伤经验用穴"
+  },
+  {
+    "name": "四神聪",
+    "code": "EX-HN1",
+    "meridian": "经外奇穴",
+    "location": "头顶部，百会前后左右各旁开1寸，共4穴",
+    "indications": ["失眠", "健忘", "癫痫", "头痛", "眩晕", "脑发育不全", "中风后遗症", "帕金森病辅助"],
+    "method": "平刺0.5~0.8寸",
+    "pregnancy_caution": false,
+    "caution_notes": ""
+  },
+  {
+    "name": "太阳",
+    "code": "EX-HN5",
+    "meridian": "经外奇穴",
+    "location": "头部，眉梢与目外眦之间，向后约一横指凹陷处",
+    "indications": ["头痛", "偏头痛", "目赤肿痛", "眼睑瞤动", "面瘫", "三叉神经痛", "眩晕"],
+    "method": "直刺或斜刺0.3~0.5寸，或点刺出血",
+    "pregnancy_caution": false,
+    "caution_notes": "避开颞浅动脉；偏头痛放血须医师操作"
+  },
+  {
+    "name": "安眠",
+    "code": "EX-HN17",
+    "meridian": "经外奇穴",
+    "location": "项部，翳风与风池连线中点",
+    "indications": ["失眠", "头痛", "眩晕", "心悸", "癫狂", "癔症", "耳鸣"],
+    "method": "直刺0.8~1寸",
+    "pregnancy_caution": false,
+    "caution_notes": "安神助眠经验穴；不宜深刺，方向朝鼻尖，防伤延髓"
+  },
+  {
+    "name": "子宫穴",
+    "code": "EX-CA1",
+    "meridian": "经外奇穴",
+    "location": "下腹部，脐中下4寸（中极）旁开3寸",
+    "indications": ["阴挺", "月经不调", "痛经", "崩漏", "不孕", "疝气"],
+    "method": "直刺0.8~1.5寸",
+    "pregnancy_caution": true,
+    "caution_notes": "下腹部穴，孕妇禁针"
+  },
+  {
+    "name": "定喘",
+    "code": "EX-B1",
+    "meridian": "经外奇穴",
+    "location": "背部，第7颈椎棘突下（大椎）旁开0.5寸",
+    "indications": ["哮喘", "咳嗽", "落枕", "肩背痛", "荨麻疹"],
+    "method": "直刺或斜刺0.5~0.8寸",
+    "pregnancy_caution": false,
+    "caution_notes": "平喘经验穴；防气胸"
+  },
+  {
+    "name": "夹脊穴",
+    "code": "EX-B2",
+    "meridian": "经外奇穴",
+    "location": "背腰部，第1胸椎至第5腰椎棘突下旁开0.5寸，一侧17穴",
+    "indications": ["脊柱相关疾病", "神经根型颈椎病", "腰椎间盘突出", "带状疱疹后遗神经痛", "相应节段脏腑病"],
+    "method": "直刺0.3~0.5寸或斜向脊柱方向刺0.5~1寸",
+    "pregnancy_caution": false,
+    "caution_notes": "华佗夹脊；上胸段治心肺上肢病，下胸段治胃肠肝胆病，腰段治腰腹下肢病；防气胸及脊髓损伤，忌深刺；腰段孕妇慎用"
+  },
+  {
+    "name": "腰眼",
+    "code": "EX-B7",
+    "meridian": "经外奇穴",
+    "location": "腰部，第4腰椎棘突下旁开约3.5寸凹陷中",
+    "indications": ["腰痛", "尿频", "消渴", "虚劳", "妇科腰部酸痛"],
+    "method": "直刺1~1.5寸",
+    "pregnancy_caution": true,
+    "caution_notes": "腰部穴，孕妇禁针"
+  },
+  {
+    "name": "十宣",
+    "code": "EX-UE12",
+    "meridian": "经外奇穴",
+    "location": "十指尖端，距指甲游离缘0.1寸，左右共10穴",
+    "indications": ["昏迷", "晕厥", "中暑", "热病", "小儿惊风", "指端麻木"],
+    "method": "浅刺0.1~0.2寸或点刺出血",
+    "pregnancy_caution": false,
+    "caution_notes": "高热、昏迷急救点刺出血"
+  },
+  {
+    "name": "八邪",
+    "code": "EX-UE9",
+    "meridian": "经外奇穴",
+    "location": "手背，第1~5指间指蹼缘上方赤白肉际处，每侧4穴",
+    "indications": ["手背肿痛", "手指麻木", "蛇串疮", "烦热", "目痛"],
+    "method": "斜刺0.5~0.8寸或点刺出血",
+    "pregnancy_caution": false,
+    "caution_notes": "蛇伤急救后世衍用"
+  },
+  {
+    "name": "八风",
+    "code": "EX-LE10",
+    "meridian": "经外奇穴",
+    "location": "足背，第1~5趾间趾蹼缘上方赤白肉际处，每侧4穴",
+    "indications": ["足跗肿痛", "脚气", "趾麻", "毒蛇咬伤"],
+    "method": "斜刺0.5~0.8寸或点刺出血",
+    "pregnancy_caution": false,
+    "caution_notes": "毒蛇咬伤急救排毒"
+  },
+  {
+    "name": "胆囊穴",
+    "code": "EX-LE6",
+    "meridian": "经外奇穴",
+    "location": "小腿外侧，阳陵泉直下1~2寸压痛处",
+    "indications": ["急慢性胆囊炎", "胆石症", "胆道蛔虫症"],
+    "method": "直刺1~1.5寸",
+    "pregnancy_caution": false,
+    "caution_notes": "胆绞痛辅助；诊断性压痛参考穴"
+  },
+  {
+    "name": "阑尾穴",
+    "code": "EX-LE7",
+    "meridian": "经外奇穴",
+    "location": "小腿前外侧，足三里直下1~2寸（犊鼻下约5~6寸）压痛处",
+    "indications": ["急慢性阑尾炎", "消化不良", "下肢痿痹"],
+    "method": "直刺1~1.5寸",
+    "pregnancy_caution": false,
+    "caution_notes": "阑尾炎辅助治疗，须先外科评估排除手术指征"
+  }
+]
