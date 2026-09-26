@@ -58,3 +58,10 @@ def test_record_empty_session_summary(tmp_path):
     items = store.list()
     assert items[0]["primary_syndrome"] == "" and items[0]["has_final"] is False
     assert items[0]["symptoms"] == ["我最近头晕"]
+
+
+def test_record_evidence_persistence(tmp_path):
+    store = RecordStore(tmp_path)
+    store.update_evidence("s3", ["心悸", "失眠"], tongue="舌淡", pulse="脉细弱")
+    rec = RecordStore(tmp_path).get("s3")  # 新实例读取（模拟重启）
+    assert rec["evidence"] == {"symptoms": ["心悸", "失眠"], "tongue": "舌淡", "pulse": "脉细弱"}

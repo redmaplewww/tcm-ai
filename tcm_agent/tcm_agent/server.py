@@ -80,16 +80,73 @@ def _assessment_summary(result) -> dict[str, Any]:
     }
 
 
+def _has_record(session_id: str) -> bool:
+    try:
+        rec = _records.get(session_id)
+    except ValueError:
+        return False
+    return bool(rec.get("messages") or rec.get("finals"))
+
+
+def _restore_session(session_id: str) -> ConsultSession:
+    """从档案还原会话：患者信息 + 可信证据 + 红旗/维度上下文 + LLM历史回顾。"""
+    from pydantic_ai.messages import (
+        ModelRequest,
+        ModelResponse,
+        TextPart,
+        UserPromptPart,
+    )
+
+    rec = _records.get(session_id)
+    patient = rec.get("patient") or {}
+    evidence = rec.get("evidence") or {}
+    final = (rec.get("finals") or [{}])[-1].get("result") or {}
+    symptoms = evidence.get("symptoms") or final.get("symptoms_canonical") or []
+
+    case = PatientCase(
+        sex=patient.get("sex"),
+        age=patient.get("age"),
+        pregnant=bool(patient.get("pregnant")),
+        symptoms=list(symptoms),
+        tongue=evidence.get("tongue") or "",
+        pulse=evidence.get("pulse") or "",
+    )
+    session = ConsultSession(
+        make_agent_llm_fn() if llm.llm_available() else None, case=case
+    )
+    # 红旗检测与问诊维度的上下文回放（历史用户陈述）
+    for m in rec.get("messages", []):
+        if m.get("role") == "user":
+            session.evidence_texts.append(str(m.get("text", "")))
+    # LLM对话上下文回放：合成历史回顾消息
+    summary_parts = [
+        str(m.get("text", "")) for m in rec.get("messages", []) if m.get("role") == "user"
+    ]
+    summary = "；".join(summary_parts)[-1500:]
+    if final.get("primary_syndrome"):
+        summary += f"（此前辨证结论：{final.get('primary_syndrome')}，治法：{final.get('treatment_principle', '')}）"
+    if summary:
+        session.history = [
+            ModelRequest(parts=[UserPromptPart(content="[历史会话回顾] " + summary)]),
+            ModelResponse(parts=[TextPart(content="好的，我已了解此前的问诊情况，将在此基础上继续。")]),
+        ]
+    return session
+
+
 def _get_or_create(session_id: str, req: ChatRequest) -> ConsultSession:
     if req.reset or session_id not in _SESSIONS:
-        case = PatientCase(
-            sex=(req.sex if req.sex in ("男", "女") else None),
-            age=req.age,
-            pregnant=bool(req.pregnant),
-        )
-        session = ConsultSession(
-            make_agent_llm_fn() if llm.llm_available() else None, case=case
-        )
+        if not req.reset and _has_record(session_id):
+            # 档案存在（服务重启/换端后）：还原会话继续，而不是从零开始
+            session = _restore_session(session_id)
+        else:
+            case = PatientCase(
+                sex=(req.sex if req.sex in ("男", "女") else None),
+                age=req.age,
+                pregnant=bool(req.pregnant),
+            )
+            session = ConsultSession(
+                make_agent_llm_fn() if llm.llm_available() else None, case=case
+            )
         _SESSIONS[session_id] = session
         if len(_SESSIONS) > _SESSION_CAP:  # 淘汰最旧会话（档案已持久化，不丢失）
             oldest = next(iter(_SESSIONS))
@@ -160,6 +217,13 @@ async def api_chat(req: ChatRequest):
         _records.add_message(session_id, "assistant", result.reply, meta=meta or None)
         if result.final is not None:
             _records.add_final(session_id, result.final.model_dump())
+        # 持久化当前可信证据（供重启/换端后还原会话）
+        _records.update_evidence(
+            session_id,
+            session.engine.credible_symptoms(),
+            session.engine.credible_tongue(),
+            session.engine.credible_pulse(),
+        )
     except Exception:  # noqa: BLE001
         pass
 

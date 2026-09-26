@@ -179,6 +179,7 @@ label.small{font-size:12.5px;color:var(--muted);display:flex;align-items:center;
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px">
       <b id="m-title" style="font-size:16px"></b>
       <div style="display:flex;gap:8px;flex-shrink:0">
+        <button class="btn-primary" style="padding:4px 12px;font-size:13px" onclick="resumeRecord(window._recId)">💬 继续该问诊</button>
         <button class="btn-ghost" style="padding:4px 12px;font-size:13px;color:var(--red)" onclick="delRecord()">删除</button>
         <button class="btn-ghost" style="padding:4px 12px;font-size:13px" onclick="closeModal()">关闭</button>
       </div>
@@ -421,6 +422,39 @@ async function delRecord(){
     await fetch('/api/records/'+window._recId, {method:'DELETE'});
     closeModal(); loadRecords();
   }catch(e){ alert('删除失败：'+e.message); }
+}
+
+/* ---------------- 会话还原/继续 ---------------- */
+async function resumeRecord(id){
+  if (!id) return;
+  try{
+    const rec = await (await fetch('/api/records/'+id)).json();
+    if (rec.error){ alert('档案不存在'); return; }
+    sessionId = id;               // 后端将自动从档案还原辨证上下文
+    log().innerHTML = '';
+    // 按时间顺序回放消息与报告
+    const events = [];
+    (rec.messages||[]).forEach(m=>events.push({t:m.time, type:'msg', m}));
+    (rec.finals||[]).forEach(f=>events.push({t:f.time, type:'final', f}));
+    events.sort((a,b)=>a.t-b.t);
+    events.forEach(e=>{
+      if (e.type==='msg'){
+        if (e.m.role==='user'){ addUser(e.m.text); }
+        else {
+          addBot(e.m.text);
+          (e.m.meta&&e.m.meta.challenges||[]).forEach(c=>addBlock('challenge', c));
+          if (e.m.meta&&e.m.meta.syndrome_change) addBlock('change', e.m.meta.syndrome_change);
+          (e.m.meta&&e.m.meta.excluded_evidence||[]).forEach(x=>addBlock('excluded', x));
+        }
+      } else {
+        const card=document.createElement('div'); card.className='final-card';
+        card.innerHTML = `<div class="fc-head">📋 辨证报告（历史）· ${fmtTime(e.f.time)}</div>` + buildFinalHTML(e.f.result);
+        log().appendChild(card);
+      }
+    });
+    addBot('✅ 已恢复历史会话，辨证上下文已加载。您可以继续提问或补充症状，我会在此基础上更新分析。');
+    closeModal(); scroll();
+  }catch(e){ alert('还原失败：'+e.message); }
 }
 
 function closeModal(){ $('modal').style.display='none'; window._recId=null; }

@@ -94,6 +94,18 @@ class RecordStore:
             rec["finals"].append({"time": _now(), "result": final})
             self._save(rec)
 
+    def update_evidence(self, sid: str, symptoms: list[str],
+                        tongue: str = "", pulse: str = "") -> None:
+        """持久化当前可信证据（用于服务重启/换端后会话还原）。"""
+        with self._lock:
+            rec = self.get(sid)
+            rec["evidence"] = {
+                "symptoms": [s for s in symptoms if s],
+                "tongue": tongue or "",
+                "pulse": pulse or "",
+            }
+            self._save(rec)
+
     # ------------------------------------------------------------ 列表/删除
 
     def list(self, limit: int = 50) -> list[dict[str, Any]]:

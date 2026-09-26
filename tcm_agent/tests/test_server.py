@@ -63,3 +63,39 @@ def test_info_and_herb_safety(client):
 def test_query_offline_mode(client):
     r = client.post("/api/query", json={"question": "什么是阴虚", "mode": "offline"})
     assert r.status_code == 200 and len(r.json()["results"]) > 0
+
+
+def test_restore_session_from_record(client):
+    """服务重启后：同会话id自动从档案还原辨证上下文。"""
+    # 预置档案：患者信息 + 对话 + 可信证据 + 报告
+    srv._records.update_patient("r9", sex="女", age=35)
+    srv._records.add_message("r9", "user", "心慌睡不着、吃不下饭")
+    srv._records.add_message("r9", "assistant", "再补充些信息")
+    srv._records.update_evidence("r9", ["心悸", "失眠", "食少", "疲乏"], tongue="舌淡")
+    srv._records.add_final("r9", {"primary_syndrome": "心脾两虚证",
+                                  "treatment_principle": "补益心脾",
+                                  "symptoms_canonical": ["心悸", "失眠", "食少", "疲乏"]})
+
+    session = srv._restore_session("r9")
+    assert session.case.sex == "女" and session.case.age == 35
+    assert set(session.case.symptoms) >= {"心悸", "失眠", "食少"}
+    assert session.case.tongue == "舌淡"
+    # 红旗/维度上下文回放
+    assert any("心慌" in t for t in session.evidence_texts)
+    # LLM历史回顾消息已注入
+    assert len(session.history) == 2
+    # 无档案的会话id走空白新建路径
+    assert srv._has_record("never-exist-xyz") is False
+    blank = srv._get_or_create("never-exist-xyz",
+                               type("R", (), {"reset": False, "sex": None, "age": None, "pregnant": None})())
+    assert blank.case.symptoms == []
+
+
+def test_chat_records_evidence_for_resume(client):
+    """每轮问诊后可信证据被持久化（供还原）。"""
+    client.post("/api/chat", json={"session": "r10", "message": "我头痛失眠心慌",
+                                   "sex": "男", "age": 40})
+    rec = srv._records.get("r10")
+    # 离线模式无LLM提取，但患者信息与消息已记录
+    assert rec["patient"]["sex"] == "男"
+    assert any(m["text"] == "我头痛失眠心慌" for m in rec["messages"])
