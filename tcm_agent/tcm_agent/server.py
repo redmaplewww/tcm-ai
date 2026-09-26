@@ -15,6 +15,7 @@ API：
 from __future__ import annotations
 
 import argparse
+from pathlib import Path
 from typing import Any, Optional
 
 from fastapi import FastAPI
@@ -36,10 +37,8 @@ _SESSION_CAP = 60
 #: 问诊档案（每会话一JSON，持久化到 tcm_records/）
 _records = RecordStore()
 
-_INDEX_HTML = FileResponse(
-    str(__import__("pathlib").Path(__file__).parent / "web" / "index.html"),
-    media_type="text/html",
-)
+#: 前端页面（每次请求重新构造，避免文件更新后Content-Length过期导致响应损坏）
+_INDEX_HTML = Path(__file__).parent / "web" / "index.html"
 
 
 # ---------------------------------------------------------------- 请求模型
@@ -167,7 +166,7 @@ def _get_or_create(session_id: str, req: ChatRequest) -> ConsultSession:
 
 @app.get("/")
 def index():
-    return _INDEX_HTML
+    return FileResponse(str(_INDEX_HTML), media_type="text/html")
 
 
 @app.get("/api/info")

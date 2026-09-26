@@ -189,7 +189,7 @@ label.small{font-size:12.5px;color:var(--muted);display:flex;align-items:center;
 </div>
 
 <script>
-let sessionId = crypto.randomUUID();
+let sessionId = localStorage.getItem('tcm_session') || crypto.randomUUID();
 let busy = false;
 
 const $ = id => document.getElementById(id);
@@ -202,14 +202,20 @@ const log = () => $('chat-log');
     $('chip-model').textContent = '模型：' + (r.llm_available ? r.model : '离线');
     $('chip-kb').textContent = `知识库 ${r.kb.files} 文件 · 证型${r.data['证型']} · 中药${r.data['中药']} · 方剂${r.data['方剂']} · 红旗${r.data['红旗规则']}条`;
   } catch (e) { $('chip-model').textContent = '服务未连接'; }
-  addBot('您好，我是中医问诊助手。请描述您的主要不适（症状、持续时间、伴随表现），我会逐步追问并给出辨证参考。出现胸痛、偏瘫、大出血等急症表现时，请立即就医。');
+  // 恢复上次会话（刷新/重开浏览器不丢对话与报告）
+  const saved = localStorage.getItem('tcm_session');
+  if (saved) await resumeRecord(saved, true);
+  if (!window._resumeOk) {
+    addBot('您好，我是中医问诊助手。请描述您的主要不适（症状、持续时间、伴随表现），我会逐步追问并给出辨证参考。出现胸痛、偏瘫、大出血等急症表现时，请立即就医。');
+  }
   loadRecords();
 })();
 
 function newSession(withNotice){
   sessionId = crypto.randomUUID();
+  localStorage.setItem('tcm_session', sessionId);
   log().innerHTML = '';
-  if (withNotice) addBot('已开始新会话（上次问诊已自动存入健康档案）。请描述您的主要症状。');
+  if (withNotice) addBot('已开始新会话（上次问诊已自动存入健康档案，可随时点开回看）。请描述您的主要症状。');
   loadRecords();
 }
 
@@ -235,6 +241,7 @@ async function sendMsg(force=false){
   const text = input.value.trim();
   if (!text && !force) return;
   if (busy) return;
+  localStorage.setItem('tcm_session', sessionId);
   input.value='';
   if (text) addUser(force ? text + '（请求立即辨证）' : text);
   setThinking(true);
@@ -271,7 +278,7 @@ function renderTurn(d){
   if (d.syndrome_change) addBlock('change', d.syndrome_change);
   if (d.final){
     renderFinal(d.final);
-    addBot('✅ 报告已生成。您可以继续提问（方剂、调护、禁忌等），或补充新症状——我会更新分析；点击「⟳ 新会话」会把本次问诊存入档案并开始新的问诊。');
+    addBot('✅ 报告已生成，同时已存入右侧「🗂 健康档案」。您可以继续提问（方剂、调护、禁忌等），或补充新症状更新分析；刷新页面会自动恢复本次对话；点击「⟳ 新会话」开始新的问诊。');
   }
   loadRecords(); scroll();
 }
@@ -315,6 +322,7 @@ function renderFinal(f){
 
 async function demo(text){
   newSession(false);
+  localStorage.setItem('tcm_session', sessionId);
   addUser(text);
   $('msg-input').value = text;
   $('msg-input').value='';
@@ -385,8 +393,8 @@ async function loadRecords(){
     if (!(r.records||[]).length){ box.innerHTML='<div class="t" style="color:var(--muted)">暂无档案，完成一次问诊后自动生成</div>'; return; }
     box.innerHTML = r.records.map(x=>`
       <div class="rec-item" onclick="openRecord('${x.id}')">
-        <div class="s">${x.has_final ? esc(x.primary_syndrome||'辨证报告') : '🟢 进行中'}</div>
-        <div class="t">${fmtTime(x.updated_at)} · ${x.patient&&x.patient.sex?x.patient.sex+' '+((x.patient.age??'')+'岁').trim():'信息未填'} · ${x.turns}条对话</div>
+        <div class="s">${x.has_final ? '📋 '+esc(x.primary_syndrome||'辨证报告') : '🟢 进行中'}</div>
+        <div class="t">${fmtTime(x.updated_at)} · ${x.patient&&x.patient.sex?x.patient.sex+' '+((x.patient.age??'')+'岁').trim():'信息未填'} · ${x.turns}条对话${x.has_final?' · 有报告':''}</div>
         <div class="t" style="color:#374151">${esc((x.symptoms||[]).slice(0,6).join('、'))||'—'}</div>
       </div>`).join('');
   }catch(e){ /* 静默 */ }
@@ -425,12 +433,17 @@ async function delRecord(){
 }
 
 /* ---------------- 会话还原/继续 ---------------- */
-async function resumeRecord(id){
+async function resumeRecord(id, silent=false){
   if (!id) return;
   try{
     const rec = await (await fetch('/api/records/'+id)).json();
-    if (rec.error){ alert('档案不存在'); return; }
+    if (rec.error){
+      if (!silent) alert('档案不存在');
+      return;
+    }
     sessionId = id;               // 后端将自动从档案还原辨证上下文
+    localStorage.setItem('tcm_session', id);
+    window._resumeOk = true;
     log().innerHTML = '';
     // 按时间顺序回放消息与报告
     const events = [];
@@ -452,9 +465,9 @@ async function resumeRecord(id){
         log().appendChild(card);
       }
     });
-    addBot('✅ 已恢复历史会话，辨证上下文已加载。您可以继续提问或补充症状，我会在此基础上更新分析。');
+    addBot('✅ 已恢复上次问诊会话（辨证上下文已加载）。您可以继续提问或补充症状，我会在此基础上更新分析。');
     closeModal(); scroll();
-  }catch(e){ alert('还原失败：'+e.message); }
+  }catch(e){ if (!silent) alert('还原失败：'+e.message); }
 }
 
 function closeModal(){ $('modal').style.display='none'; window._recId=null; }
