@@ -27,3 +27,6 @@ Thumbs.db
 # 本地环境配置（含密钥的本地覆盖）
 .env
 *.local.json
+
+# 用户问诊档案（本地隐私数据，不入库）
+tcm_records/

@@ -35,6 +35,17 @@ def test_red_flag_emergency_chest_pain():
     assert any(f.level == "emergency" for f in flags), f"心梗红旗未触发: {flags}"
 
 
+def test_red_flag_emergency_colloquial_variants():
+    """口语变体也应触发（安全宁误报不漏报）。"""
+    for text in (
+        "胸口剧痛放射到左臂",
+        "我爸突然胸口剧痛，疼到左胳膊，满头冷汗",
+        "心口剧痛，疼到肩膀",
+    ):
+        flags = reasoning.check_red_flags([text])
+        assert any(f.level == "emergency" for f in flags), f"口语胸痛未触发: {text} -> {flags}"
+
+
 def test_red_flag_stroke():
     flags = reasoning.check_red_flags(["口角歪斜", "一侧肢体无力", "说话不清楚"])
     assert any(f.level in ("emergency", "urgent") for f in flags), f"中风红旗未触发: {flags}"

@@ -82,6 +82,14 @@ aside{display:flex;flex-direction:column;gap:12px;min-height:0;overflow-y:auto}
 .herb-ok{color:var(--green);font-weight:700}
 .herb-bad{color:var(--red);font-weight:700}
 label.small{font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:4px}
+.rec-item{border:1px solid #e5e7eb;border-radius:8px;padding:8px 10px;cursor:pointer}
+.rec-item:hover{border-color:var(--teal-light);background:#f0fdfa}
+.rec-item .t{font-size:12px;color:var(--muted)}
+.rec-item .s{font-weight:600;font-size:13px}
+.msgline{padding:6px 10px;border-radius:8px;margin-bottom:6px;font-size:13px;line-height:1.6;white-space:pre-wrap}
+.msgline.user{background:var(--teal);color:#fff}
+.msgline.assistant{background:#f3f4f6}
+.meta-line{font-size:12px;color:#92400e}
 </style>
 </head>
 <body>
@@ -155,7 +163,28 @@ label.small{font-size:12.5px;color:var(--muted);display:flex;align-items:center;
       </div>
       <div class="qresult" id="h-result"></div>
     </div>
+
+    <div class="panel" style="display:flex;flex-direction:column;min-height:140px">
+      <h3>🗂 健康档案（自动保存）
+        <button class="btn-ghost" style="padding:3px 10px;font-size:12px;float:right" onclick="loadRecords()">刷新</button>
+      </h3>
+      <div id="r-list" style="overflow-y:auto;font-size:13px;display:flex;flex-direction:column;gap:6px"></div>
+    </div>
   </aside>
+</div>
+
+<!-- 档案详情弹窗 -->
+<div id="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:50;padding:30px 16px;overflow-y:auto" onclick="if(event.target===this)closeModal()">
+  <div style="background:#fff;max-width:860px;margin:0 auto;border-radius:14px;padding:18px 20px;max-height:calc(100vh - 60px);overflow-y:auto">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px">
+      <b id="m-title" style="font-size:16px"></b>
+      <div style="display:flex;gap:8px;flex-shrink:0">
+        <button class="btn-ghost" style="padding:4px 12px;font-size:13px;color:var(--red)" onclick="delRecord()">删除</button>
+        <button class="btn-ghost" style="padding:4px 12px;font-size:13px" onclick="closeModal()">关闭</button>
+      </div>
+    </div>
+    <div id="m-body"></div>
+  </div>
 </div>
 
 <script>
@@ -173,12 +202,14 @@ const log = () => $('chat-log');
     $('chip-kb').textContent = `知识库 ${r.kb.files} 文件 · 证型${r.data['证型']} · 中药${r.data['中药']} · 方剂${r.data['方剂']} · 红旗${r.data['红旗规则']}条`;
   } catch (e) { $('chip-model').textContent = '服务未连接'; }
   addBot('您好，我是中医问诊助手。请描述您的主要不适（症状、持续时间、伴随表现），我会逐步追问并给出辨证参考。出现胸痛、偏瘫、大出血等急症表现时，请立即就医。');
+  loadRecords();
 })();
 
 function newSession(withNotice){
   sessionId = crypto.randomUUID();
   log().innerHTML = '';
-  if (withNotice) addBot('已开始新会话。请描述您的主要症状。');
+  if (withNotice) addBot('已开始新会话（上次问诊已自动存入健康档案）。请描述您的主要症状。');
+  loadRecords();
 }
 
 /* ---------------- 发送与渲染 ---------------- */
@@ -229,51 +260,56 @@ function renderTurn(d){
   (d.excluded_evidence||[]).forEach(x=>addBlock('excluded', x));
   if (d.is_emergency){
     const div=document.createElement('div'); div.className='emergency'; div.textContent='🚨 '+d.emergency_advice; log().appendChild(div);
-    addBot('本次会话已结束（急症）。请立即就医，切勿拖延。');
-    newSession(false); scroll(); return;
+    addBot('请立即就医，切勿拖延！如仍有疑问可继续留言，我可以协助解释。');
+    loadRecords(); scroll(); return;
   }
   if (d.assessment && !d.final && d.assessment.primary_syndrome){
     const a=d.assessment;
     addBlock('assess', `即时辨证：${a.primary_syndrome}（置信度${Math.round(a.top[0].confidence*100)}%，信息仍在收集中）治法方向：${a.treatment_principle||'—'}`);
   }
   if (d.syndrome_change) addBlock('change', d.syndrome_change);
-  if (d.final){ renderFinal(d.final); addBot('本次会话已结束。可点击"新会话"重新开始，或继续在下方进行知识查询。'); }
-  scroll();
+  if (d.final){
+    renderFinal(d.final);
+    addBot('✅ 报告已生成。您可以继续提问（方剂、调护、禁忌等），或补充新症状——我会更新分析；点击「⟳ 新会话」会把本次问诊存入档案并开始新的问诊。');
+  }
+  loadRecords(); scroll();
+}
+
+function buildFinalHTML(f){
+  let html = `<div class="fc-body">`;
+  if (f.is_emergency){
+    html += `<div class="emergency" style="border-radius:8px">🚨 ${f.emergency_advice}</div>`;
+  } else {
+    html += `<div><b>规范化症状：</b><div class="tags" style="margin-top:4px">${(f.symptoms_canonical||[]).map(s=>`<span class="tag">${esc(s)}</span>`).join('')}</div></div>`;
+    (f.syndromes||[]).forEach((c,i)=>{
+      html += `<div class="synd ${i===0?'main':''}">
+        <h4>${i===0?'【主】':''}${esc(c.name)}</h4>
+        <div class="meta">${c.system||''} ${c.organ?'· '+c.organ:''}</div>
+        <div class="bar"><i style="width:${Math.round(c.confidence*100)}%"></i></div>
+        <div class="kv">
+          <b>治法</b><span>${esc(c.treatment||'—')}</span>
+          <b>匹配症状</b><span>${(c.matched_symptoms||[]).map(esc).join('、')||'—'}</span>
+          <b>舌脉</b><span>${esc(c.tongue||'—')} / ${esc(c.pulse||'—')}</span>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px">${esc(c.rationale||'')}</div>
+      </div>`;
+    });
+    if (f.treatment_principle) html += `<div class="kv"><b>治法</b><span>${esc(f.treatment_principle)}</span></div>`;
+    if ((f.formula_suggestions||[]).length) html += `<div class="kv"><b>代表方剂</b><span>${esc(f.formula_suggestions.join('；'))}（须经执业中医师辨证）</span></div>`;
+    if ((f.otc_suggestions||[]).length) html += `<div class="kv"><b>中成药参考</b><span>${esc(f.otc_suggestions.join('、'))}</span></div>`;
+    if ((f.followup_questions||[]).length) html += `<div><b>建议补充信息：</b><ul class="dot">${f.followup_questions.map(q=>`<li>（${esc(q.dimension)}）${esc(q.question)}</li>`).join('')}</ul></div>`;
+    if ((f.care_advice||[]).length) html += `<div><b>调护建议：</b><ul class="dot">${f.care_advice.map(c=>`<li>${esc(c)}</li>`).join('')}</ul></div>`;
+    if ((f.special_population_notes||[]).length) html += `<div><b>特殊人群提示：</b><ul class="dot">${f.special_population_notes.map(c=>`<li>${esc(c)}</li>`).join('')}</ul></div>`;
+    if ((f.red_flags||[]).length) html += `<div><b>就医提示：</b><ul class="dot">${f.red_flags.map(x=>`<li>[${x.level}] ${esc(x.name)}：${esc(x.advice)}</li>`).join('')}</ul></div>`;
+  }
+  html += `<div class="disclaimer">${esc(f.disclaimer||'')}</div></div>`;
+  return html;
 }
 
 function renderFinal(f){
   const card=document.createElement('div'); card.className='final-card';
-  let html = `<div class="fc-head">📋 辨证参考报告</div><div class="fc-body">`;
-
-  if (f.is_emergency){
-    html += `<div class="emergency" style="border-radius:8px">🚨 ${f.emergency_advice}</div>`;
-  } else {
-    html += `<div><b>规范化症状：</b><div class="tags" style="margin-top:4px">${(f.symptoms_canonical||[]).map(s=>`<span class="tag">${s}</span>`).join('')}</div></div>`;
-
-    (f.syndromes||[]).forEach((c,i)=>{
-      html += `<div class="synd ${i===0?'main':''}">
-        <h4>${i===0?'【主】':''}${c.name}</h4>
-        <div class="meta">${c.system||''} ${c.organ?'· '+c.organ:''}</div>
-        <div class="bar"><i style="width:${Math.round(c.confidence*100)}%"></i></div>
-        <div class="kv">
-          <b>治法</b><span>${c.treatment||'—'}</span>
-          <b>匹配症状</b><span>${(c.matched_symptoms||[]).join('、')||'—'}</span>
-          <b>舌脉</b><span>${c.tongue||'—'} / ${c.pulse||'—'}</span>
-        </div>
-        <div style="font-size:12px;color:var(--muted);margin-top:4px">${c.rationale||''}</div>
-      </div>`;
-    });
-
-    if (f.treatment_principle) html += `<div class="kv"><b>治法</b><span>${f.treatment_principle}</span></div>`;
-    if ((f.formula_suggestions||[]).length) html += `<div class="kv"><b>代表方剂</b><span>${f.formula_suggestions.join('；')}（须经执业中医师辨证）</span></div>`;
-    if ((f.otc_suggestions||[]).length) html += `<div class="kv"><b>中成药参考</b><span>${f.otc_suggestions.join('、')}</span></div>`;
-    if ((f.followup_questions||[]).length) html += `<div><b>建议补充信息：</b><ul class="dot">${f.followup_questions.map(q=>`<li>（${q.dimension}）${q.question}</li>`).join('')}</ul></div>`;
-    if ((f.care_advice||[]).length) html += `<div><b>调护建议：</b><ul class="dot">${f.care_advice.map(c=>`<li>${c}</li>`).join('')}</ul></div>`;
-    if ((f.special_population_notes||[]).length) html += `<div><b>特殊人群提示：</b><ul class="dot">${f.special_population_notes.map(c=>`<li>${c}</li>`).join('')}</ul></div>`;
-    if ((f.red_flags||[]).length) html += `<div><b>就医提示：</b><ul class="dot">${f.red_flags.map(x=>`<li>[${x.level}] ${x.name}：${x.advice}</li>`).join('')}</ul></div>`;
-  }
-  html += `<div class="disclaimer">${f.disclaimer||''}</div></div>`;
-  card.innerHTML = html; log().appendChild(card);
+  card.innerHTML = `<div class="fc-head">📋 辨证参考报告</div>` + buildFinalHTML(f);
+  log().appendChild(card);
 }
 
 async function demo(text){
@@ -332,6 +368,62 @@ async function runHerb(){
     box.innerHTML = h;
   }catch(e){ box.innerHTML='<div class="item">检查失败：'+e.message+'</div>'; }
 }
+
+/* ---------------- 健康档案 ---------------- */
+function esc(s){ return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function fmtTime(t){
+  const d = new Date((t||0)*1000);
+  const p = n => String(n).padStart(2,'0');
+  return `${d.getMonth()+1}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+
+async function loadRecords(){
+  try{
+    const r = await (await fetch('/api/records')).json();
+    const box = $('r-list');
+    if (!(r.records||[]).length){ box.innerHTML='<div class="t" style="color:var(--muted)">暂无档案，完成一次问诊后自动生成</div>'; return; }
+    box.innerHTML = r.records.map(x=>`
+      <div class="rec-item" onclick="openRecord('${x.id}')">
+        <div class="s">${x.has_final ? esc(x.primary_syndrome||'辨证报告') : '🟢 进行中'}</div>
+        <div class="t">${fmtTime(x.updated_at)} · ${x.patient&&x.patient.sex?x.patient.sex+' '+((x.patient.age??'')+'岁').trim():'信息未填'} · ${x.turns}条对话</div>
+        <div class="t" style="color:#374151">${esc((x.symptoms||[]).slice(0,6).join('、'))||'—'}</div>
+      </div>`).join('');
+  }catch(e){ /* 静默 */ }
+}
+
+async function openRecord(id){
+  try{
+    const rec = await (await fetch('/api/records/'+id)).json();
+    if (rec.error){ alert('档案不存在'); return; }
+    window._recId = id;
+    const p = rec.patient||{};
+    $('m-title').textContent = `问诊档案 · ${fmtTime(rec.created_at)} ~ ${fmtTime(rec.updated_at)}`;
+    let h = `<div style="font-size:13px;color:var(--muted);margin-bottom:10px">患者：${p.sex||'未知'} / ${p.age!=null?p.age+'岁':'年龄未知'}${p.pregnant?' · 怀孕':''} · 对话${(rec.messages||[]).length}条 · 报告${(rec.finals||[]).length}次</div>`;
+    (rec.finals||[]).forEach((f,i)=>{
+      h += `<div class="final-card" style="margin-bottom:12px"><div class="fc-head">📋 辨证报告 ${i+1} · ${fmtTime(f.time)}</div>${buildFinalHTML(f.result)}</div>`;
+    });
+    h += `<b style="font-size:13px">💬 对话记录</b><div style="display:flex;flex-direction:column;margin-top:8px;max-height:420px;overflow-y:auto">`;
+    (rec.messages||[]).forEach(m=>{
+      let meta = '';
+      (m.meta&&m.meta.challenges||[]).forEach(c=>{ meta += `<div class="meta-line">⚠ ${esc(c)}</div>`; });
+      if (m.meta&&m.meta.syndrome_change) meta += `<div class="meta-line" style="color:#5b21b6">⟳ ${esc(m.meta.syndrome_change)}</div>`;
+      h += `<div class="msgline ${m.role}"><b>${m.role==='user'?'我':'助手'}：</b>${esc(m.text)}${meta}</div>`;
+    });
+    h += `</div>`;
+    $('m-body').innerHTML = h;
+    $('modal').style.display='block';
+  }catch(e){ alert('读取档案失败：'+e.message); }
+}
+
+async function delRecord(){
+  if (!window._recId || !confirm('确定删除该档案？删除后不可恢复。')) return;
+  try{
+    await fetch('/api/records/'+window._recId, {method:'DELETE'});
+    closeModal(); loadRecords();
+  }catch(e){ alert('删除失败：'+e.message); }
+}
+
+function closeModal(){ $('modal').style.display='none'; window._recId=null; }
 </script>
 </body>
 </html>

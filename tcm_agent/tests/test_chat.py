@@ -113,6 +113,48 @@ def test_session_offline_without_llm():
     assert r.reply and r.final is None and not r.is_emergency
 
 
+def test_session_continues_after_final():
+    """报告后不结束会话：可继续咨询，补充新信息可更新报告。"""
+    session = ConsultSession(_scripted_llm([
+        ChatTurn(reply="分析如下。", new_symptoms=["心悸", "失眠", "食少", "疲乏"],
+                 ready_for_analysis=True),
+        ChatTurn(reply="归脾汤相关问题解答……"),
+        ChatTurn(reply="结合新补充的信息更新分析。", new_symptoms=["健忘", "多梦"],
+                 ready_for_analysis=True),
+    ]))
+    r1 = asyncio.run(session.step("心慌睡不着、吃不下饭"))
+    assert r1.final is not None and session.has_final is True
+    assert "心脾两虚" in r1.final.primary_syndrome
+
+    # 报告后继续咨询：不出新报告，会话保持
+    r2 = asyncio.run(session.step("归脾汤能长期吃吗"))
+    assert r2.final is None and r2.reply and not r2.is_emergency
+
+    # 补充重要症状并要求重新分析：报告更新
+    r3 = asyncio.run(session.step("对了，我还健忘多梦，重新分析一下"))
+    assert r3.final is not None
+    assert "心脾两虚" in r3.final.primary_syndrome
+    assert set(["健忘", "多梦"]) <= set(session.engine.credible_symptoms())
+
+
+def test_explicit_analysis_request_forces_final():
+    """用户明确要求分析但LLM没置ready：引擎兜底强制出报告。"""
+    session = ConsultSession(_scripted_llm([
+        ChatTurn(reply="还想再问几个问题……",  # LLM没置ready
+                 new_symptoms=["心悸", "失眠", "食少", "疲乏"], ready_for_analysis=False),
+    ]))
+    r = asyncio.run(session.step("心慌睡不着吃不下饭，请帮我分析一下"))
+    assert r.final is not None, "明确分析请求未兜底出报告"
+    assert "心脾两虚" in r.final.primary_syndrome
+
+    # 证据不足时（仅1条症状）不强制，继续收集
+    session2 = ConsultSession(_scripted_llm([
+        ChatTurn(reply="先补充些信息", new_symptoms=["头痛"], ready_for_analysis=False),
+    ]))
+    r2 = asyncio.run(session2.step("帮我分析下"))
+    assert r2.final is None
+
+
 def test_chat_agent_wiring():
     """chat agent构建与工具注册（TestModel）。"""
     agent = build_chat_agent(TestModel())

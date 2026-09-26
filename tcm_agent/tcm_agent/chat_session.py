@@ -10,6 +10,7 @@ ConsultSession 是不依赖具体LLM实现的会话状态机：
 
 from __future__ import annotations
 
+import re
 from typing import Any, Awaitable, Callable, Optional
 
 from . import reasoning
@@ -24,6 +25,9 @@ from .models import (
 
 #: 单次问诊最大对话轮数（防止无限追问）
 MAX_TURNS = 12
+
+#: 用户明确要求分析的表述（LLM未置ready时由引擎兜底强制出报告）
+_ANALYSIS_RE = re.compile(r"(分析|辨证|辩证|什么证|给个结论|直接看看|帮我看看)")
 
 LlmFn = Callable[[list[Any], str], Awaitable[ChatTurn]]
 
@@ -52,6 +56,7 @@ class ConsultSession:
             self.evidence_texts.append(self.case.free_text)
         self.llm_fn = llm_fn
         self.turns = 0
+        self.has_final = False  # 已出过辨证报告（之后转入咨询模式）
         self.engine = EvidenceEngine()
         # 初始症状视为用户自述症状（high），舌脉按可信度规则分级
         initial = [
@@ -148,7 +153,8 @@ class ConsultSession:
                 turns=self.turns,
             )
 
-        if self.turns > MAX_TURNS:
+        # 轮数上限只在首次报告前强制触发；报告后转入咨询模式，不重复强制
+        if self.turns > MAX_TURNS and not self.has_final:
             force_analysis = True
 
         turn: ChatTurn = await self.llm_fn(self.history, user_text)
@@ -171,6 +177,11 @@ class ConsultSession:
             advice = turn.reply or "症状可能为急症，请立即就医。"
             return self._emergency_result(advice)
 
+        # 5.5) 用户明确要求分析且已有基本证据：即使LLM未置位也强制出报告
+        if not force_analysis and not turn.ready_for_analysis and user_text:
+            if _ANALYSIS_RE.search(user_text) and len(self.engine.credible_symptoms()) >= 2:
+                force_analysis = True
+
         # 6) 动态复辨：每轮基于可信证据重新辨证
         assessment, change = self._reassess()
 
@@ -178,6 +189,7 @@ class ConsultSession:
         resolutions = self.engine.resolution_notes()
 
         if turn.ready_for_analysis or force_analysis:
+            self.has_final = True
             return ChatStepResult(
                 reply=turn.reply,
                 final=assessment,
