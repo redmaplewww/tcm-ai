@@ -2,6 +2,52 @@
 
 基于 **pydantic-ai** 框架与**分级Markdown知识库**（`../tcm_kb/`）构建的中医智能问诊与查询系统。
 
+## 功能总览
+
+- **多轮问诊**：十问歌追问 → 证据取证（可信度分级/矛盾质询/澄清替换）→ 动态复辨（证型随信息更新）
+- **账号系统**：注册/登录（pbkdf2密码哈希+HMAC签名令牌），问诊数据按用户隔离存储，支持导入游客档案
+- **健康画像**：从问诊历史推断体质倾向（九种体质映射，急性外感证不计入）、慢性症状、辨证史
+- **个性化**：画像注入辨证上下文（个性化问诊）；报告附按体质的生活习惯建议（饮食/起居/运动/情志/茶饮）
+- **安全**：三级红旗急症转诊、十八反/十九畏配伍校验、妊娠警示
+- **Web界面**：对话问诊、健康档案（会话还原/继续问诊）、知识查询、配伍检查、画像展示
+
+## 快速开始
+
+```bash
+cd tcm_agent && python -m venv ../.venv
+../.venv/Scripts/python -m pip install -e ".[web,dev]"
+../.venv/Scripts/python -m tcm_agent.server     # http://127.0.0.1:8000
+```
+
+### CLI
+
+```bash
+python -m tcm_agent query "什么是阴虚"          # 离线知识检索
+python -m tcm_agent ask "麻黄的功效"            # LLM问答
+python -m tcm_agent consult --symptoms "怕冷,发烧,清鼻涕" --pulse "浮紧"   # 离线辨证
+python -m tcm_agent consult --llm ...           # LLM辨证+离线对照
+python -m tcm_agent chat                        # 多轮问诊（终端）
+python -m tcm_agent demo / info
+```
+
+### LLM凭据（`tcm_agent/llm.py`）
+
+优先级：`TCM_LLM_KEY`/`TCM_LLM_BASE_URL`/`TCM_LLM_MODEL` 环境变量 → 本机ZCode CLI
+登录凭据。默认GLM-5.3-Flash（Anthropic兼容端点）。不可用时自动离线。
+
+## 数据与隐私
+
+- `tcm_records/`：游客问诊档案；`tcm_records/_u_<用户名>/`：各账号档案（均为本地数据，已gitignore）
+- `tcm_data/`：账号库（pbkdf2哈希密码）与令牌密钥（已gitignore）
+- 画像从档案数据推导，不单独存储；删除档案即删除对应画像数据
+
+## 测试
+
+```bash
+../.venv/Scripts/python -m pytest -v        # 离线：101项
+../.venv/Scripts/python -m pytest -m llm -v # 真实LLM：11项（约10分钟）
+```
+
 ## 架构
 
 ```
@@ -37,61 +83,6 @@
 **设计原则**：推理结论以确定性引擎为准（不依赖LLM、可完全测试）；LLM只做
 对话编排与解释性输出，且必须基于工具返回（知识库接地）——防止编造方剂配伍。
 安全规则（红旗、配伍禁忌）为硬编码规则而非概率模型。
-
-## 安装
-
-```bash
-cd tcm_agent
-python -m venv ../.venv
-../.venv/Scripts/python -m pip install -e ".[dev]"   # 或 pip install pydantic-ai pytest
-```
-
-## 使用
-
-```bash
-# 知识查询（离线知识库检索，无需任何凭据）
-python -m tcm_agent query "什么是阴虚"
-python -m tcm_agent query "感冒风寒风热怎么区别" -k 3
-
-# 真实LLM问答（GLM，自动复用本机ZCode CLI登录凭据）
-python -m tcm_agent ask "什么是阴虚？有什么表现？"
-python -m tcm_agent ask "麻黄的功效和禁忌"
-
-# 病情推理（离线确定性引擎）
-python -m tcm_agent consult --symptoms "怕冷,发烧,无汗,头痛,清鼻涕" --tongue "舌淡红苔薄白" --pulse "浮紧"
-
-# 真实LLM辨证（附离线引擎对照；第一阶段纯文字交互）
-python -m tcm_agent consult --llm --symptoms "心慌,睡不着,多梦,健忘,疲乏,吃不下饭" --tongue "舌淡" --sex 女 --age 35
-python -m tcm_agent consult --llm --symptoms "胸口像压了石头,胸痛放射到左臂,出冷汗"   # 急症红旗演示
-
-# 交互式多轮问诊（LLM对话收集症状，/诊断 立即出结果；无凭据时自动离线问卷）
-python -m tcm_agent chat
-python -m tcm_agent chat --sex 女 --age 35
-
-# 内置演示与统计
-python -m tcm_agent demo
-python -m tcm_agent info
-```
-
-### LLM凭据解析（`tcm_agent/llm.py`）
-
-优先级：①环境变量 `TCM_LLM_KEY` / `TCM_LLM_BASE_URL` / `TCM_LLM_MODEL`；
-②本机ZCode CLI登录凭据（`~/.zcode/v2/config.json` 的 bigmodel-coding-plan）。
-默认接入 `GLM-5.3-Flash`（open.bigmodel.cn 的Anthropic兼容端点）。
-凭据不可用时自动退回离线模式，全部离线功能不受影响。
-
-## 测试
-
-```bash
-../.venv/Scripts/python -m pytest -v        # 离线套件：76项（数据/检索/推理/配伍/证据取证/会话状态机/接线）
-../.venv/Scripts/python -m pytest -m llm -v # 真实LLM集成：11项（问答/辨证/多轮问诊/动态复辨/自诊质询，约10分钟）
-```
-
-覆盖：数据完整性 → 知识库检索准确性 → 确定性推理（经典辨证/红旗/追问/特殊人群）
-→ 十八反十九畏配伍安全 → **证据可信度引擎**（分级/矛盾检测/口语识别/数值核验/维度解决）
-→ **多轮会话状态机**（动态复辨/证型变化/矛盾质询/澄清替换/急症短路）
-→ pydantic-ai Agent接线 → 真实GLM端到端（含"补充症状后证型从心血虚动态更新为心脾两虚"
-与"自诊术语被质询且不污染辨证"两项行为验证）。
 
 ## 多轮问诊架构（`tcm_agent/chat_session.py` + `tcm_agent/evidence.py`）
 

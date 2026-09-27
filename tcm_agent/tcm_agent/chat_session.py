@@ -48,12 +48,27 @@ class ConsultSession:
     """多轮问诊会话状态机。"""
 
     def __init__(self, llm_fn: Optional[LlmFn] = None,
-                 case: Optional[PatientCase] = None) -> None:
+                 case: Optional[PatientCase] = None,
+                 constitution: str = "",
+                 profile_summary: str = "") -> None:
         self.case = case or PatientCase()
+        self.constitution = constitution            # 用户体质倾向（画像）
         self.history: list[Any] = []
         self.evidence_texts: list[str] = list(self.case.symptoms)
         if self.case.free_text:
             self.evidence_texts.append(self.case.free_text)
+        # 画像注入LLM上下文：个性化问诊与建议
+        if profile_summary:
+            from pydantic_ai.messages import (
+                ModelRequest,
+                ModelResponse,
+                TextPart,
+                UserPromptPart,
+            )
+            self.history = [
+                ModelRequest(parts=[UserPromptPart(content="[用户健康画像] " + profile_summary)]),
+                ModelResponse(parts=[TextPart(content="已了解该用户画像，问诊与建议将结合体质背景进行。")]),
+            ]
         self.llm_fn = llm_fn
         self.turns = 0
         self.has_final = False  # 已出过辨证报告（之后转入咨询模式）
@@ -119,7 +134,7 @@ class ConsultSession:
     def _reassess(self) -> tuple[ConsultationResult, str]:
         """动态复辨：基于可信证据重新辨证，返回（评估, 证型变化说明）。"""
         case = self._credible_case()
-        assessment = reasoning.consult(case)
+        assessment = reasoning.consult(case, constitution=self.constitution)
         change = ""
         current = _core_syndrome_name(assessment.primary_syndrome)
         if assessment.primary_syndrome and self._last_primary and current != self._last_primary:

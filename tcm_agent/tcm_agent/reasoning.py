@@ -361,8 +361,12 @@ def special_population_notes(case: PatientCase) -> list[str]:
 
 # ---------------------------------------------------------------- 主推理流程
 
-def consult(case: PatientCase) -> ConsultationResult:
-    """离线完整问诊推理（不依赖LLM），是Agent问诊的确定性基线。"""
+def consult(case: PatientCase, constitution: str = "") -> ConsultationResult:
+    """离线完整问诊推理（不依赖LLM），是Agent问诊的确定性基线。
+
+    constitution: 用户体质倾向（如"阴虚质"）时附加生活习惯建议。
+    """
+    from .profile import lifestyle_advice
     canonical = normalize_symptoms(case.symptoms)
     evidence = [case.free_text, " ".join(case.symptoms), " ".join(canonical)]
     flags = check_red_flags(evidence)
@@ -409,4 +413,6 @@ def consult(case: PatientCase) -> ConsultationResult:
         evidence, sex=case.sex, age=case.age
     )
     result.special_population_notes = special_population_notes(case)
+    if constitution:
+        result.lifestyle_advice = lifestyle_advice(constitution)
     return result

@@ -97,6 +97,7 @@ label.small{font-size:12.5px;color:var(--muted);display:flex;align-items:center;
   <h1>中医药智能问诊助手</h1>
   <span class="chip" id="chip-model">…</span>
   <span class="chip" id="chip-kb">…</span>
+  <span class="chip" id="chip-user" style="cursor:pointer" onclick="document.getElementById('p-user').scrollIntoView()">👤 未登录</span>
   <span class="sub">多轮问诊 · 证据取证 · 动态辨证 | 仅供参考，不构成诊疗建议</span>
 </header>
 
@@ -118,6 +119,27 @@ label.small{font-size:12.5px;color:var(--muted);display:flex;align-items:center;
 
   <!-- ================= 侧栏 ================= -->
   <aside>
+    <div class="panel" id="p-user">
+      <h3>👤 账号</h3>
+      <div id="auth-login" class="row" style="flex-direction:column;align-items:stretch;gap:6px">
+        <input type="text" id="a-user" placeholder="用户名（2-20位）">
+        <input type="password" id="a-pass" placeholder="密码（至少6位）">
+        <div class="row" style="margin:0">
+          <button class="btn-primary" style="flex:1;padding:8px" onclick="authLogin()">登录</button>
+          <button class="btn-ghost" style="flex:1;padding:8px" onclick="authRegister()">注册</button>
+        </div>
+        <div class="t" style="font-size:12px;color:var(--muted)">登录后问诊数据归入账号，自动生成健康画像；不登录仍可游客使用</div>
+      </div>
+      <div id="auth-info" style="display:none">
+        <div style="font-size:14px;margin-bottom:8px">👋 <b id="a-nick"></b>（<span id="a-name"></span>）</div>
+        <div class="row" style="margin-bottom:0">
+          <button class="btn-primary" style="flex:1;padding:8px" onclick="showProfile()">📊 我的画像</button>
+          <button class="btn-ghost" style="padding:8px" onclick="importGuest()">📥 导入游客档案</button>
+          <button class="btn-ghost" style="padding:8px" onclick="authLogout()">退出</button>
+        </div>
+      </div>
+    </div>
+
     <div class="panel">
       <h3>👤 患者信息（新会话时生效）</h3>
       <div class="row">
@@ -191,6 +213,8 @@ label.small{font-size:12.5px;color:var(--muted);display:flex;align-items:center;
 <script>
 let sessionId = localStorage.getItem('tcm_session') || crypto.randomUUID();
 let busy = false;
+let authToken = localStorage.getItem('tcm_token') || '';
+let currentUser = null;
 
 const $ = id => document.getElementById(id);
 const log = () => $('chat-log');
@@ -209,7 +233,113 @@ const log = () => $('chat-log');
     addBot('您好，我是中医问诊助手。请描述您的主要不适（症状、持续时间、伴随表现），我会逐步追问并给出辨证参考。出现胸痛、偏瘫、大出血等急症表现时，请立即就医。');
   }
   loadRecords();
+  await refreshAuth();
 })();
+
+/* ---------------- 账号 ---------------- */
+function updateAuthUI(){
+  const logged = !!currentUser;
+  $('auth-login').style.display = logged ? 'none' : 'flex';
+  $('auth-info').style.display = logged ? 'block' : 'none';
+  if (logged){
+    $('a-nick').textContent = currentUser.nickname;
+    $('a-name').textContent = currentUser.username;
+    $('chip-user').textContent = '👤 ' + currentUser.nickname;
+  } else {
+    $('chip-user').textContent = '👤 未登录';
+  }
+}
+
+async function refreshAuth(){
+  if (!authToken){ currentUser = null; updateAuthUI(); return; }
+  try{
+    const r = await (await fetch('/api/auth/me?token='+encodeURIComponent(authToken))).json();
+    currentUser = r.username ? r : null;
+    if (!currentUser){ authToken=''; localStorage.removeItem('tcm_token'); }
+  }catch(e){ /* 离线容忍 */ }
+  updateAuthUI();
+}
+
+async function authRegister(){
+  const username = $('a-user').value.trim(), password = $('a-pass').value;
+  const r = await (await fetch('/api/auth/register', {method:'POST',headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({username, password})})).json();
+  if (r.error){ alert('注册失败：'+r.error); return; }
+  await afterAuthOk(r, '注册成功');
+}
+
+async function authLogin(){
+  const username = $('a-user').value.trim(), password = $('a-pass').value;
+  const r = await (await fetch('/api/auth/login', {method:'POST',headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({username, password})})).json();
+  if (r.error){ alert('登录失败：'+r.error); return; }
+  await afterAuthOk(r, '登录成功');
+}
+
+async function afterAuthOk(r, msg){
+  authToken = r.token; localStorage.setItem('tcm_token', authToken);
+  currentUser = {username: r.username, nickname: r.nickname};
+  updateAuthUI();
+  newSession(true);
+  addBot(`${msg}，欢迎${r.nickname}。之后问诊将归入您的账号并用于健康画像。`);
+  loadRecords();
+}
+
+function authLogout(){
+  authToken=''; currentUser=null; localStorage.removeItem('tcm_token');
+  updateAuthUI(); newSession(true);
+  addBot('已退出登录，切换为游客模式。');
+  loadRecords();
+}
+
+async function importGuest(){
+  if (!confirm('将游客档案导入当前账号（已有档案不覆盖）？')) return;
+  try{
+    const r = await (await fetch('/api/auth/import-guest', {method:'POST',headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({token: authToken})})).json();
+    if (r.error){ alert('导入失败：'+r.error); return; }
+    alert('已导入 '+r.imported+' 条游客档案');
+    newSession(false); loadRecords();
+  }catch(e){ alert('导入失败：'+e.message); }
+}
+
+/* ---------------- 用户画像 ---------------- */
+async function showProfile(){
+  try{
+    const p = await (await fetch('/api/profile?token='+encodeURIComponent(authToken))).json();
+    if (p.error){ alert('请先登录'); return; }
+    window._recId = null;
+    $('m-title').textContent = `📊 健康画像 · ${p.username}`;
+    let h = '';
+    if (p.dominant_constitution){
+      h += `<div style="font-size:15px;margin-bottom:8px">体质倾向：<b style="color:var(--teal);font-size:18px">${esc(p.dominant_constitution)}</b>
+        <span style="font-size:12px;color:var(--muted)">（${p.constitution_confident?'结论较明确':'证据尚分散，仅供参考'}）</span></div>`;
+      Object.entries(p.constitution_scores).slice(0,4).forEach(([k,v])=>{
+        h += `<div style="display:flex;align-items:center;gap:8px;margin:4px 0"><span style="width:56px;font-size:12px">${esc(k)}</span>
+          <div class="bar" style="flex:1"><i style="width:${Math.round(v*100)}%"></i></div>
+          <span style="font-size:12px;color:var(--muted)">${Math.round(v*100)}%</span></div>`;
+      });
+    } else {
+      h += `<div style="font-size:13px;color:var(--muted)">暂无体质结论——完成几次问诊后自动生成（共${p.sessions}次记录）</div>`;
+    }
+    if (p.chronic_symptoms && p.chronic_symptoms.length){
+      h += `<div style="margin-top:10px"><b style="font-size:13px">跨次反复症状</b><div class="tags" style="margin-top:4px">${p.chronic_symptoms.map(s=>`<span class="tag warn">${esc(s)}</span>`).join('')}</div></div>`;
+    }
+    if (p.top_symptoms && p.top_symptoms.length){
+      h += `<div style="margin-top:8px"><b style="font-size:13px">高频症状</b><div class="tags" style="margin-top:4px">${p.top_symptoms.map(s=>`<span class="tag">${esc(s)}</span>`).join('')}</div></div>`;
+    }
+    if (p.syndrome_history && p.syndrome_history.length){
+      h += `<div style="margin-top:10px"><b style="font-size:13px">辨证历史</b><ul class="dot" style="margin-top:4px">${
+        p.syndrome_history.slice(-6).reverse().map(x=>`<li>${fmtTime(x.date)} ${esc(x.syndrome||'—')}${x.treatment?'（'+esc(x.treatment)+'）':''}</li>`).join('')}</ul></div>`;
+    }
+    if (p.lifestyle_advice && p.lifestyle_advice.length){
+      h += `<div class="final-card" style="margin-top:12px"><div class="fc-head">🌿 ${esc(p.dominant_constitution)}生活习惯建议</div><div class="fc-body"><ul class="dot">${p.lifestyle_advice.map(a=>`<li>${esc(a)}</li>`).join('')}</ul></div></div>`;
+    }
+    h += `<div class="disclaimer" style="margin-top:10px;font-size:12px;color:var(--muted)">画像由问诊历史推导，仅供参考；体质判定请以执业中医师面诊为准。</div>`;
+    $('m-body').innerHTML = h;
+    $('modal').style.display='block';
+  }catch(e){ alert('获取画像失败：'+e.message); }
+}
 
 function newSession(withNotice){
   sessionId = crypto.randomUUID();
@@ -249,7 +379,7 @@ async function sendMsg(force=false){
     const r = await fetch('/api/chat', {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
-        session: sessionId, message: text || '请立即给出辨证分析', force,
+        session: sessionId, message: text || '请立即给出辨证分析', force, token: authToken,
         sex: $('p-sex').value || null,
         age: $('p-age').value ? Number($('p-age').value) : null,
         pregnant: $('p-preg').checked || null,
@@ -307,6 +437,7 @@ function buildFinalHTML(f){
     if ((f.otc_suggestions||[]).length) html += `<div class="kv"><b>中成药参考</b><span>${esc(f.otc_suggestions.join('、'))}</span></div>`;
     if ((f.followup_questions||[]).length) html += `<div><b>建议补充信息：</b><ul class="dot">${f.followup_questions.map(q=>`<li>（${esc(q.dimension)}）${esc(q.question)}</li>`).join('')}</ul></div>`;
     if ((f.care_advice||[]).length) html += `<div><b>调护建议：</b><ul class="dot">${f.care_advice.map(c=>`<li>${esc(c)}</li>`).join('')}</ul></div>`;
+    if ((f.lifestyle_advice||[]).length) html += `<div><b>🌿 生活习惯建议（按体质）：</b><ul class="dot">${f.lifestyle_advice.map(c=>`<li>${esc(c)}</li>`).join('')}</ul></div>`;
     if ((f.special_population_notes||[]).length) html += `<div><b>特殊人群提示：</b><ul class="dot">${f.special_population_notes.map(c=>`<li>${esc(c)}</li>`).join('')}</ul></div>`;
     if ((f.red_flags||[]).length) html += `<div><b>就医提示：</b><ul class="dot">${f.red_flags.map(x=>`<li>[${x.level}] ${esc(x.name)}：${esc(x.advice)}</li>`).join('')}</ul></div>`;
   }
@@ -330,7 +461,7 @@ async function demo(text){
   try{
     const r = await fetch('/api/chat', {
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({session: sessionId, message: text, sex:$('p-sex').value||null,
+      body: JSON.stringify({session: sessionId, message: text, token: authToken, sex:$('p-sex').value||null,
         age: $('p-age').value?Number($('p-age').value):null, pregnant: $('p-preg').checked||null})
     });
     renderTurn(await r.json());
@@ -388,7 +519,7 @@ function fmtTime(t){
 
 async function loadRecords(){
   try{
-    const r = await (await fetch('/api/records')).json();
+    const r = await (await fetch('/api/records'+(authToken?'?token='+encodeURIComponent(authToken):''))).json();
     const box = $('r-list');
     if (!(r.records||[]).length){ box.innerHTML='<div class="t" style="color:var(--muted)">暂无档案，完成一次问诊后自动生成</div>'; return; }
     box.innerHTML = r.records.map(x=>`
@@ -402,7 +533,7 @@ async function loadRecords(){
 
 async function openRecord(id){
   try{
-    const rec = await (await fetch('/api/records/'+id)).json();
+    const rec = await (await fetch('/api/records/'+id+(authToken?'?token='+encodeURIComponent(authToken):''))).json();
     if (rec.error){ alert('档案不存在'); return; }
     window._recId = id;
     const p = rec.patient||{};
@@ -427,7 +558,7 @@ async function openRecord(id){
 async function delRecord(){
   if (!window._recId || !confirm('确定删除该档案？删除后不可恢复。')) return;
   try{
-    await fetch('/api/records/'+window._recId, {method:'DELETE'});
+    await fetch('/api/records/'+window._recId+(authToken?'?token='+encodeURIComponent(authToken):''), {method:'DELETE'});
     closeModal(); loadRecords();
   }catch(e){ alert('删除失败：'+e.message); }
 }
@@ -436,7 +567,7 @@ async function delRecord(){
 async function resumeRecord(id, silent=false){
   if (!id) return;
   try{
-    const rec = await (await fetch('/api/records/'+id)).json();
+    const rec = await (await fetch('/api/records/'+id+(authToken?'?token='+encodeURIComponent(authToken):''))).json();
     if (rec.error){
       if (!silent) alert('档案不存在');
       return;

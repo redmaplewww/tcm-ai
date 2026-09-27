@@ -135,6 +135,20 @@ class RecordStore:
         items.sort(key=lambda x: x["updated_at"], reverse=True)
         return items[:limit]
 
+    def all(self) -> list[dict[str, Any]]:
+        """全部档案的完整内容（供画像计算）。"""
+        records: list[dict[str, Any]] = []
+        for path in self.root.glob("*.json"):
+            try:
+                with open(path, encoding="utf-8") as f:
+                    rec = json.load(f)
+                if rec.get("messages") or rec.get("finals"):
+                    records.append(rec)
+            except (json.JSONDecodeError, OSError):
+                continue
+        records.sort(key=lambda r: r.get("updated_at", 0))
+        return records
+
     def delete(self, sid: str) -> bool:
         path = self._path(sid)
         if path.exists():

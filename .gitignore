@@ -28,5 +28,6 @@ Thumbs.db
 .env
 *.local.json
 
-# 用户问诊档案（本地隐私数据，不入库）
+# 用户问诊档案与账号数据（本地隐私数据，不入库）
 tcm_records/
+tcm_data/

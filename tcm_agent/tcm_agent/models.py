@@ -87,6 +87,7 @@ class ConsultationResult(BaseModel):
     formula_suggestions: list[str] = Field(default_factory=list, description="代表方剂参考（须医师辨证）")
     otc_suggestions: list[str] = Field(default_factory=list, description="常用中成药参考")
     care_advice: list[str] = Field(default_factory=list, description="调护建议")
+    lifestyle_advice: list[str] = Field(default_factory=list, description="按用户体质的生活习惯建议")
     followup_questions: list[FollowUpQuestion] = Field(default_factory=list, description="按十问歌生成的追问")
     special_population_notes: list[str] = Field(default_factory=list, description="特殊人群提示（孕妇/小儿/老人）")
     disclaimer: str = Field(
@@ -156,3 +157,26 @@ class HerbSafetyResult(BaseModel):
     toxicity_notes: list[str] = Field(default_factory=list)
     is_safe: bool = True
     advice: str = ""
+
+
+# ---------------------------------------------------------------- 用户画像
+
+class SyndromeHistoryItem(BaseModel):
+    date: Optional[float] = None
+    syndrome: str = ""
+    treatment: str = ""
+
+
+class UserProfile(BaseModel):
+    """用户健康画像（从问诊历史推导）。"""
+    username: str
+    sessions: int = 0
+    first_seen: float = 0
+    last_active: float = 0
+    dominant_constitution: str = Field(default="", description="主导体质倾向，如'阴虚质'")
+    constitution_scores: dict[str, float] = Field(default_factory=dict, description="体质占比")
+    constitution_confident: bool = Field(default=False, description="体质结论是否达到置信阈值（占比≥0.4）")
+    top_symptoms: list[str] = Field(default_factory=list, description="高频症状")
+    chronic_symptoms: list[str] = Field(default_factory=list, description="跨会话反复出现的症状")
+    syndrome_history: list[SyndromeHistoryItem] = Field(default_factory=list, description="历次辨证结论")
+    lifestyle_advice: list[str] = Field(default_factory=list, description="按体质的生活习惯建议")

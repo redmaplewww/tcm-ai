@@ -76,7 +76,7 @@ def test_restore_session_from_record(client):
                                   "treatment_principle": "补益心脾",
                                   "symptoms_canonical": ["心悸", "失眠", "食少", "疲乏"]})
 
-    session = srv._restore_session("r9")
+    session = srv._restore_session(srv._records, "r9")
     assert session.case.sex == "女" and session.case.age == 35
     assert set(session.case.symptoms) >= {"心悸", "失眠", "食少"}
     assert session.case.tongue == "舌淡"
@@ -85,9 +85,11 @@ def test_restore_session_from_record(client):
     # LLM历史回顾消息已注入
     assert len(session.history) == 2
     # 无档案的会话id走空白新建路径
-    assert srv._has_record("never-exist-xyz") is False
-    blank = srv._get_or_create("never-exist-xyz",
-                               type("R", (), {"reset": False, "sex": None, "age": None, "pregnant": None})())
+    assert srv._has_record(srv._records, "never-exist-xyz") is False
+    blank = srv._get_or_create(
+        srv._records, "guest:never-exist-xyz",
+        type("R", (), {"session": "never-exist-xyz", "reset": False,
+                       "sex": None, "age": None, "pregnant": None})())
     assert blank.case.symptoms == []
 
 
