@@ -413,6 +413,10 @@ def consult(case: PatientCase, constitution: str = "") -> ConsultationResult:
         evidence, sex=case.sex, age=case.age
     )
     result.special_population_notes = special_population_notes(case)
+    # 体质建议：优先用户画像体质；无画像时从本次主证推导（慢性证型才映射）
+    if not constitution and result.primary_syndrome:
+        from .profile import syndrome_to_constitution
+        constitution = syndrome_to_constitution(result.primary_syndrome) or ""
     if constitution:
         result.lifestyle_advice = lifestyle_advice(constitution)
     return result

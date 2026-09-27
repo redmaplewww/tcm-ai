@@ -164,6 +164,11 @@ def test_consult_with_constitution_lifestyle():
     from tcm_agent import reasoning
     case = PatientCase(symptoms=["腰膝酸软", "五心烦热", "盗汗", "失眠"])
     r1 = reasoning.consult(case)
-    assert r1.lifestyle_advice == []
-    r2 = reasoning.consult(case, constitution="阴虚质")
-    assert r2.lifestyle_advice and any("熬夜" in a for a in r2.lifestyle_advice)
+    # 无画像时从主证推导体质（肾阴虚→阴虚质）也给建议
+    assert any("熬夜" in a for a in r1.lifestyle_advice), r1.lifestyle_advice
+    # 显式体质优先
+    r2 = reasoning.consult(case, constitution="气郁质")
+    assert any("疏肝" in a or "运动" in a for a in r2.lifestyle_advice)
+    # 急性证不推导体质建议
+    r3 = reasoning.consult(PatientCase(symptoms=["恶寒", "发热", "无汗", "头痛"]))
+    assert r3.lifestyle_advice == []
