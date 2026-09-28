@@ -32,3 +32,7 @@ Thumbs.db
 tcm_records/
 tcm_data/
 tmp_*/
+
+# 服务器连接包（含私钥，绝不入库）
+_vastmind/
+*.pem
