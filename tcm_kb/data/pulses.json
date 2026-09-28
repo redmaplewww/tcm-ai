@@ -1,0 +1,679 @@
+[
+ {
+  "name": "平",
+  "is_reference": true,
+  "category": "正常脉",
+  "classical": "《内经·平人气象论》：人一呼脉再动，一吸脉亦再动，呼吸定息脉五动，命曰平人。",
+  "definition": "一息四五至（成人静息60-90次/分），三部有脉，不浮不沉，从容和缓，节律一致",
+  "rules": {
+   "rate_bpm": [
+    60,
+    90
+   ],
+   "rhythm_cv_max": 5,
+   "pauses": "none",
+   "h3_h1": [
+    0.4,
+    0.7
+   ],
+   "h4_h1": [
+    0.28,
+    0.48
+   ],
+   "h5_h1": [
+    0.25,
+    0.55
+   ],
+   "rise_time_ms": [
+    70,
+    130
+   ]
+  },
+  "ppg_assessable": 0.8,
+  "pressure_assessable": 1.0,
+  "main_indications": "平人有胃气神根；胃（从容和缓）、神（柔和有力节律齐）、根（尺脉沉取有力）",
+  "combined_examples": [],
+  "note": "PPG可判至数节律与部分形态，胃神根之'根'与力度不可判",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "浮",
+  "category": "浮脉类",
+  "classical": "《脉经》：浮脉，举之有余，按之不足。《濒湖脉学》：浮脉惟从肉上行，如循榆荚似毛轻。",
+  "definition": "轻取即得，重按稍减而不空",
+  "rules": {
+   "depth_class": [
+    "浮"
+   ]
+  },
+  "ppg_assessable": 0.0,
+  "pressure_assessable": 1.0,
+  "main_indications": "表证；久病浮而无根为虚阳外越（危候）。浮有力表实，浮无力表虚",
+  "combined_examples": [
+   "浮紧 表寒",
+   "浮数 表热",
+   "浮缓 表虚",
+   "浮滑 风痰"
+  ],
+  "note": "脉位维度需压力传感器分级加压（浮中沉取），PPG无此信息",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "洪",
+  "category": "浮脉类",
+  "classical": "《脉经》：洪脉，极大在指下。《濒湖脉学》：脉来洪盛去还衰，满指滔滔应夏时。",
+  "definition": "脉体宽大，充实有力，来盛去衰",
+  "rules": {
+   "amplitude_class": [
+    "高"
+   ],
+   "width_class": [
+    "宽"
+   ],
+   "rise_time_ms": [
+    50,
+    110
+   ],
+   "h4_h1": [
+    0.0,
+    0.35
+   ]
+  },
+  "ppg_assessable": 0.4,
+  "pressure_assessable": 1.0,
+  "main_indications": "热盛（阳明气分大热）",
+  "combined_examples": [
+   "洪数 气分热盛",
+   "洪大 阳明热甚"
+  ],
+  "note": "PPG可见主波高尖、上升快、降中峡深、来盛去衰之势，但脉体宽度与力度不可判",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "芤",
+  "category": "浮脉类",
+  "classical": "《脉经》：芤脉，其形中央空两边实。《濒湖脉学》：芤形浮大软如葱，按之旁有中央空。",
+  "definition": "浮大中空，如按葱管",
+  "rules": {
+   "depth_class": [
+    "浮"
+   ],
+   "hollow": true
+  },
+  "ppg_assessable": 0.0,
+  "pressure_assessable": 1.0,
+  "main_indications": "失血、伤阴（大失血后血容量骤减）",
+  "combined_examples": [],
+  "note": "中空指感为按压时中央塌陷感，纯压力维度",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "革",
+  "category": "浮脉类",
+  "classical": "《脉经》：革脉，有似沉伏，实大而长，微弦。",
+  "definition": "浮而搏指，中空外坚，如按鼓皮",
+  "rules": {
+   "depth_class": [
+    "浮"
+   ],
+   "hollow": true
+  },
+  "ppg_assessable": 0.0,
+  "pressure_assessable": 1.0,
+  "main_indications": "精血虚寒（亡血、失精、半产漏下）",
+  "combined_examples": [],
+  "note": "外坚中空为压力维度",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "散",
+  "category": "浮脉类",
+  "classical": "《脉经》：散脉，大而散，散者气实血虚。",
+  "definition": "浮散无根，至数不齐，按之则无",
+  "rules": {
+   "rhythm_cv_max": 25,
+   "amplitude_class": [
+    "低",
+    "极低"
+   ]
+  },
+  "ppg_assessable": 0.3,
+  "pressure_assessable": 1.0,
+  "main_indications": "元气离散、脏气衰微（危候）",
+  "combined_examples": [],
+  "note": "PPG可捕捉至数不齐与幅度低而不稳，无根感不可判；出现即建议就医",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "濡",
+  "category": "浮脉类",
+  "classical": "《脉经》：濡脉，极软而浮细。",
+  "definition": "浮而细软，重按无力",
+  "rules": {
+   "depth_class": [
+    "浮"
+   ],
+   "width_class": [
+    "细"
+   ],
+   "strength_class": [
+    "无力"
+   ]
+  },
+  "ppg_assessable": 0.0,
+  "pressure_assessable": 1.0,
+  "main_indications": "虚证、湿证（脾虚湿盛、诸虚劳损）",
+  "combined_examples": [],
+  "note": "脉位+脉力复合维度，压力传感器专属",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "沉",
+  "category": "沉脉类",
+  "classical": "《脉经》：沉脉，举之不足，按之有余。《濒湖脉学》：水行润下脉来沉，筋骨之间软滑匀。",
+  "definition": "轻取不应，重按始得",
+  "rules": {
+   "depth_class": [
+    "沉"
+   ]
+  },
+  "ppg_assessable": 0.0,
+  "pressure_assessable": 1.0,
+  "main_indications": "里证。沉有力里实，沉无力里虚",
+  "combined_examples": [
+   "沉迟 里寒",
+   "沉数 里热",
+   "沉滑 痰饮食积",
+   "沉涩 血瘀"
+  ],
+  "note": "脉位维度，压力传感器专属",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "伏",
+  "category": "沉脉类",
+  "classical": "《脉经》：伏脉，极重指按之，着骨乃得。",
+  "definition": "重按推筋着骨始得，甚则伏而不见",
+  "rules": {
+   "depth_class": [
+    "极沉"
+   ]
+  },
+  "ppg_assessable": 0.0,
+  "pressure_assessable": 1.0,
+  "main_indications": "邪闭、厥证、痛极",
+  "combined_examples": [],
+  "note": "脉位维度",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "牢",
+  "category": "沉脉类",
+  "classical": "《脉经》：牢脉，似沉似伏，实大而长，微弦。",
+  "definition": "沉按实大弦长，坚牢不移",
+  "rules": {
+   "depth_class": [
+    "沉"
+   ],
+   "strength_class": [
+    "有力"
+   ],
+   "h3_h1": [
+    0.65,
+    1.0
+   ]
+  },
+  "ppg_assessable": 0.0,
+  "pressure_assessable": 1.0,
+  "main_indications": "阴寒积聚（癥瘕积聚、痞块）",
+  "combined_examples": [],
+  "note": "沉+实+弦复合，压力维度",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "弱",
+  "category": "沉脉类",
+  "classical": "《脉经》：弱脉，极软而沉细，按之欲绝指下。",
+  "definition": "沉细无力",
+  "rules": {
+   "depth_class": [
+    "沉"
+   ],
+   "width_class": [
+    "细"
+   ],
+   "strength_class": [
+    "无力"
+   ]
+  },
+  "ppg_assessable": 0.0,
+  "pressure_assessable": 1.0,
+  "main_indications": "气血不足（阳气虚衰、气血两虚）",
+  "combined_examples": [],
+  "note": "脉位+脉力维度；PPG不可判",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "迟",
+  "category": "迟脉类",
+  "classical": "《脉经》：迟脉，呼吸三至，去来极迟。《濒湖脉学》：迟来一息至惟三，阳不胜阴气血寒。",
+  "definition": "一息不足四至（成人<60次/分）",
+  "rules": {
+   "rate_bpm": [
+    30,
+    60
+   ],
+   "rhythm_cv_max": 6
+  },
+  "ppg_assessable": 1.0,
+  "pressure_assessable": 1.0,
+  "main_indications": "寒证。迟有力实寒，迟无力虚寒；运动员生理性迟缓有力不作病论",
+  "combined_examples": [
+   "浮迟 表寒",
+   "沉迟 里寒",
+   "迟缓 脾阳虚寒湿"
+  ],
+  "note": "至数维度，PPG可可靠判定",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "缓",
+  "category": "迟脉类",
+  "classical": "《脉经》：缓脉，去来亦迟不驶。《濒湖脉学》：缓脉阿阿四至通，柳梢袅袅飐轻风。欲从脉里求神气，只在从容和缓中。",
+  "definition": "一息四至（60-90次/分），脉来怠缓；从容和缓为平人胃气，病理见脉势弛缓",
+  "rules": {
+   "rate_bpm": [
+    60,
+    90
+   ],
+   "rhythm_cv_max": 5,
+   "rise_time_ms": [
+    90,
+    150
+   ]
+  },
+  "ppg_assessable": 0.6,
+  "pressure_assessable": 1.0,
+  "main_indications": "湿证、脾虚（湿性黏滞）；亦见于正常胃气",
+  "combined_examples": [
+   "缓滑 湿滞",
+   "迟缓 寒湿脾阳虚"
+  ],
+  "note": "至数可判；'弛缓'之势PPG仅能以上升时间偏长近似",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "涩",
+  "category": "迟脉类",
+  "classical": "《脉经》：涩脉，细而迟，往来难且散，或一止复来。《濒湖脉学》：细迟短涩往来难，散止依稀应指间。如雨沾沙容易散，病蚕食叶慢而艰。",
+  "definition": "往来艰涩不畅，如轻刀刮竹，与滑相反",
+  "rules": {
+   "rise_time_ms": [
+    140,
+    400
+   ],
+   "h5_h1": [
+    0.0,
+    0.2
+   ],
+   "rhythm_cv_max": 15,
+   "amplitude_class": [
+    "低",
+    "中"
+   ]
+  },
+  "ppg_assessable": 0.5,
+  "pressure_assessable": 1.0,
+  "main_indications": "血瘀、精伤血少、气滞（实涩气滞血瘀；虚涩伤精血少）",
+  "combined_examples": [
+   "弦涩 气滞血瘀",
+   "沉涩 里实血瘀",
+   "细涩 血少"
+  ],
+  "note": "PPG可见上升支迟缓、重搏波不显、逐搏形态变异大；力度粗细不可判",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "结",
+  "category": "迟脉类",
+  "classical": "《脉经》：结脉，往来缓，时一止复来。《濒湖脉学》：结脉缓而时一止，独阴偏盛欲亡阳。",
+  "definition": "迟缓而时一止，止无定数（不规则间歇）",
+  "rules": {
+   "pauses": "irregular",
+   "rate_bpm": [
+    35,
+    90
+   ]
+  },
+  "ppg_assessable": 1.0,
+  "pressure_assessable": 1.0,
+  "main_indications": "阴盛气结、寒痰瘀血；亦见气血虚衰（脏气衰微）",
+  "combined_examples": [
+   "结代并见 合参心律失常"
+  ],
+  "note": "节律维度（歇止+无规律），PPG可可靠判定；须与代脉区分",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "代",
+  "category": "迟脉类",
+  "classical": "《脉经》：代脉，来数中止，不能自还，因而复动。《濒湖脉学》：动而中止不能还，复动因而作代看。病者得之犹可疗，平人却与寿相关。",
+  "definition": "迟而中止，止有定数（规律间歇），良久复来",
+  "rules": {
+   "pauses": "fixed"
+  },
+  "ppg_assessable": 1.0,
+  "pressure_assessable": 1.0,
+  "main_indications": "脏气衰微（危候）、风证痛证、七情惊恐、跌打损伤",
+  "combined_examples": [],
+  "note": "节律维度（歇止+有规律，如二联律/三联律），PPG可可靠判定；出现即建议就医",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "数",
+  "category": "数脉类",
+  "classical": "《脉经》：数脉，去来促急。《濒湖脉学》：数脉息间常六至，阴微阳盛必狂烦。浮沉表里分虚实，惟有儿童作吉看。",
+  "definition": "一息五至以上（成人静息>90次/分）",
+  "rules": {
+   "rate_bpm": [
+    90,
+    140
+   ],
+   "rhythm_cv_max": 6
+  },
+  "ppg_assessable": 1.0,
+  "pressure_assessable": 1.0,
+  "main_indications": "热证。数有力实热，数无力虚热（阴虚内热）；亦见正常运动、情绪、小儿",
+  "combined_examples": [
+   "浮数 表热",
+   "滑数 痰热/湿热/食积化热",
+   "细数 阴虚火旺",
+   "弦数 肝火上炎",
+   "洪数 气分热盛"
+  ],
+  "note": "至数维度，PPG可可靠判定",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "疾",
+  "category": "数脉类",
+  "classical": "《诊家枢要》：疾脉，快于数而疾也。（濒湖27脉未单列，后世补入28脉）",
+  "definition": "一息七至以上（>140次/分），较数更急",
+  "rules": {
+   "rate_bpm": [
+    140,
+    220
+   ],
+   "rhythm_cv_max": 8
+  },
+  "ppg_assessable": 1.0,
+  "pressure_assessable": 1.0,
+  "main_indications": "热极、阳极阴竭（元气将脱，危候）",
+  "combined_examples": [],
+  "note": "至数维度；出现即危候，AI识别应建议立即就医",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "促",
+  "category": "数脉类",
+  "classical": "《脉经》：促脉，来去数，时一止复来。《濒湖脉学》：促脉数而时一止，此为阳极欲亡阴。三焦郁火炎炎盛，进必无生退可生。",
+  "definition": "数而时一止，止无定数",
+  "rules": {
+   "pauses": "irregular",
+   "rate_bpm": [
+    90,
+    180
+   ]
+  },
+  "ppg_assessable": 1.0,
+  "pressure_assessable": 1.0,
+  "main_indications": "阳盛实热、气滞血瘀痰饮（实热郁滞）；促而无力为虚脱之象",
+  "combined_examples": [],
+  "note": "节律维度（数+不规则歇止），PPG可可靠判定",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "动",
+  "category": "数脉类",
+  "classical": "《脉经》：动脉，见于关上，无头尾，大如豆，厥厥然动摇。",
+  "definition": "脉短如豆，滑数有力，关部尤明显",
+  "rules": {
+   "rate_bpm": [
+    90,
+    130
+   ],
+   "rise_time_ms": [
+    40,
+    90
+   ],
+   "position": "关部明显"
+  },
+  "ppg_assessable": 0.2,
+  "pressure_assessable": 1.0,
+  "main_indications": "痛证、惊恐（阴阳相搏）",
+  "combined_examples": [],
+  "note": "关部独现需寸关尺分部传感器；单点PPG基本不可判",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "虚",
+  "category": "虚脉类",
+  "classical": "《脉经》：虚脉，迟大而软，按之不足，隐指豁豁然空。《濒湖脉学》：举之迟大按之松，脉状无涯类谷空。",
+  "definition": "三部举按均无力，脉来迟缓松软",
+  "rules": {
+   "strength_class": [
+    "无力"
+   ],
+   "rate_bpm": [
+    55,
+    90
+   ]
+  },
+  "ppg_assessable": 0.1,
+  "pressure_assessable": 1.0,
+  "main_indications": "虚证（气血两虚，尤多见于气虚）",
+  "combined_examples": [],
+  "note": "脉力维度，压力传感器专属；PPG幅度与脉力相关但非等同，仅供参考",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "细",
+  "category": "虚脉类",
+  "classical": "《脉经》：细脉，小大于微，常有，但细耳。《濒湖脉学》：细来累累细如丝，应指沉沉无绝期。",
+  "definition": "脉细如线，但应指明显",
+  "rules": {
+   "width_class": [
+    "细"
+   ],
+   "amplitude_class": [
+    "低",
+    "中"
+   ]
+  },
+  "ppg_assessable": 0.3,
+  "pressure_assessable": 1.0,
+  "main_indications": "气血两虚、湿证（湿邪阻压脉道）；诸虚劳损",
+  "combined_examples": [
+   "细数 阴虚火旺",
+   "沉细 里虚寒",
+   "弦细 肝肾阴虚"
+  ],
+  "note": "脉宽维度；PPG幅度可作弱参考（受灌注、接触压影响大）",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "微",
+  "category": "虚脉类",
+  "classical": "《脉经》：微脉，极细极软，或欲绝，若有若无。《濒湖脉学》：微脉轻微瞥瞥乎，按之欲绝有还无。",
+  "definition": "极细极软，似有似无，按之欲绝",
+  "rules": {
+   "amplitude_class": [
+    "极低"
+   ]
+  },
+  "ppg_assessable": 0.2,
+  "pressure_assessable": 1.0,
+  "main_indications": "气血大虚、阳气衰微（亡阳、暴脱，危候）",
+  "combined_examples": [
+   "微细 少阴病"
+  ],
+  "note": "似有似无之象PPG仅以极低幅度近似；出现即建议就医",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "短",
+  "category": "虚脉类",
+  "classical": "《诊家枢要》：短脉，不及本位。（濒湖脉学有'短'脉论）",
+  "definition": "首尾俱短，不及本位",
+  "rules": {
+   "spatial": "不及本位"
+  },
+  "ppg_assessable": 0.0,
+  "pressure_assessable": 0.9,
+  "main_indications": "气虚（短而无力）或气郁（短而有力）",
+  "combined_examples": [],
+  "note": "寸关尺空间维度，需分部传感器",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "实",
+  "category": "实脉类",
+  "classical": "《脉经》：实脉，大而长，微强，按之隐指幅幅然。《濒湖脉学》：浮沉皆得大而长，应指无虚幅幅强。",
+  "definition": "三部举按均有力，充实有力",
+  "rules": {
+   "strength_class": [
+    "有力"
+   ],
+   "amplitude_class": [
+    "高"
+   ]
+  },
+  "ppg_assessable": 0.2,
+  "pressure_assessable": 1.0,
+  "main_indications": "实证（实热、积滞、瘀血、痰浊壅盛）；久病见实脉为孤阳外脱之逆象",
+  "combined_examples": [
+   "实滑 痰食壅盛"
+  ],
+  "note": "脉力维度；PPG幅度仅弱参考",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "滑",
+  "category": "实脉类",
+  "classical": "《脉经》：滑脉，往来前却流利展转，替替然与数相似。《濒湖脉学》：滑脉如珠替替然，往来流利却还前。",
+  "definition": "往来流利，如珠走盘，应指圆滑",
+  "rules": {
+   "rise_time_ms": [
+    40,
+    100
+   ],
+   "h3_h1": [
+    0.0,
+    0.4
+   ],
+   "h4_h1": [
+    0.0,
+    0.32
+   ],
+   "h5_h1": [
+    0.3,
+    0.95
+   ]
+  },
+  "ppg_assessable": 0.6,
+  "pressure_assessable": 1.0,
+  "main_indications": "痰饮、食滞、实热；青壮年气血充盛及孕妇可见生理性滑脉（孕脉）",
+  "combined_examples": [
+   "滑数 痰热/湿热/食积化热",
+   "浮滑 表证夹痰",
+   "沉滑 痰饮内停",
+   "弦滑 肝郁夹痰"
+  ],
+  "note": "脉图学：主波高尖、上升支陡、重搏前波低平、降中峡深、重搏波明显。PPG形态可近似判别但置信度中等",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "紧",
+  "category": "实脉类",
+  "classical": "《脉经》：紧脉，数如切绳状。《濒湖脉学》：举如转索切如绳，脉象因之得紧名。",
+  "definition": "脉来绷紧有力，状如转绳，左右弹指",
+  "rules": {
+   "rise_time_ms": [
+    40,
+    100
+   ],
+   "h3_h1": [
+    0.5,
+    0.9
+   ],
+   "h4_h1": [
+    0.35,
+    0.6
+   ],
+   "strength_class": [
+    "有力"
+   ]
+  },
+  "ppg_assessable": 0.3,
+  "pressure_assessable": 1.0,
+  "main_indications": "寒证、痛证、宿食（寒主收引，脉道拘急）",
+  "combined_examples": [
+   "浮紧 表寒",
+   "沉紧 里寒痛证",
+   "弦紧 寒滞肝脉"
+  ],
+  "note": "绷急弹指为张力（脉力）维度，属定义性类别信息；无脉力信息时不参评",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "弦",
+  "category": "实脉类",
+  "classical": "《脉经》：弦脉，举之无有，按之如弓弦状。《濒湖脉学》：弦脉迢迢端直长，肝经木旺土应伤。",
+  "definition": "端直以长，如按琴弦，从中直过，挺然指下",
+  "rules": {
+   "h3_h1": [
+    0.65,
+    1.0
+   ],
+   "h4_h1": [
+    0.45,
+    0.9
+   ],
+   "h5_h1": [
+    0.0,
+    0.25
+   ],
+   "rise_time_ms": [
+    100,
+    180
+   ]
+  },
+  "ppg_assessable": 0.5,
+  "pressure_assessable": 1.0,
+  "main_indications": "肝胆病、痛证、痰饮、疟疾；春季健康人微弦为平；老年脉弦为肾虚、动脉硬化之象",
+  "combined_examples": [
+   "弦数 肝火上炎",
+   "弦滑 肝郁夹痰",
+   "弦细 肝肾阴虚",
+   "弦涩 气滞血瘀",
+   "弦紧 寒滞肝脉"
+  ],
+  "note": "脉图学：重搏前波(h3)抬高前移、可与主波融合，降中峡位置高，重搏波低平。PPG可近似判别",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ },
+ {
+  "name": "长",
+  "category": "实脉类",
+  "classical": "《诊家枢要》：长脉，过于本位。（濒湖脉学有'长'脉论）",
+  "definition": "脉体超过本位，首尾端直",
+  "rules": {
+   "spatial": "超过本位"
+  },
+  "ppg_assessable": 0.0,
+  "pressure_assessable": 0.9,
+  "main_indications": "阳证、热证、实证；长而和缓为平人（气血充足）",
+  "combined_examples": [],
+  "note": "寸关尺空间维度，需分部传感器",
+  "kb_ref": "02_诊断学/切诊-脉诊.md"
+ }
+]

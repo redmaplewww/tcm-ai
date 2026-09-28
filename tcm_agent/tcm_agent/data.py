@@ -68,6 +68,19 @@ def glossary() -> list[dict[str, Any]]:
     return _load("glossary.json")
 
 
+def pulses() -> list[dict[str, Any]]:
+    """脉象判别规则库（pulses.json：28脉+平脉的量化规则与出处）。"""
+    return _load("pulses.json")
+
+
+def get_pulse(name: str) -> Optional[dict[str, Any]]:
+    """按脉名查规则条目（支持"数脉"->"数"）。"""
+    if not name:
+        return None
+    n = name.strip().rstrip("脉")
+    return _find(pulses(), n, "name") or _find(pulses(), name.strip(), "name")
+
+
 @lru_cache(maxsize=None)
 def symptom_maps() -> tuple[dict[str, list[str]], dict[str, list[str]]]:
     """返回 (同义词映射, 口语化映射)：术语 -> 规范症状列表。"""

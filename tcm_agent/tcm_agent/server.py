@@ -306,7 +306,7 @@ async def api_query(req: QueryRequest):
         from .agents import build_query_agent
         agent = build_query_agent()
         try:
-            out = await agent.run(question)
+            out = (await agent.run(question)).output
             return {
                 "mode": "llm",
                 "answer": out.answer,

@@ -137,12 +137,18 @@ def _sym_hit(pattern: str, terms: list[str]) -> bool:
 
 
 def _feature_hit(rule: str, given: str) -> int:
-    """舌/脉匹配强度：0未提供或不符，1部分相符，2相符。"""
+    """舌/脉匹配强度：0未提供或不符，1部分相符，2相符。
+
+    相兼脉的字序不固定（"脉数滑"与证型库"脉滑数"同义），故在子串
+    匹配后增加无序字符包含判断：规则字集⊆给定字集即判相符。
+    """
     r = (rule or "").replace("，", "").replace("、", "").replace(" ", "")
     g = (given or "").replace("，", "").replace("、", "").replace(" ", "")
     if not r or not g:
         return 0
     if r in g or g in r:
+        return 2
+    if len(r) >= 2 and set(r) <= set(g):
         return 2
     grams = {r[i:i + 2] for i in range(len(r) - 1)}
     if any(gm in g for gm in grams):
