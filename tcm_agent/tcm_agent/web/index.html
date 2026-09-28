@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>中医AI问诊助手</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%230f766e'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' fill='white'%3E医%3C/text%3E%3C/svg%3E">
 <style>
 :root{
   --teal:#0f766e; --teal-light:#14b8a6; --bg:#f0f5f4; --card:#ffffff;
@@ -211,7 +212,12 @@ label.small{font-size:12.5px;color:var(--muted);display:flex;align-items:center;
 </div>
 
 <script>
-let sessionId = localStorage.getItem('tcm_session') || crypto.randomUUID();
+/* 兼容HTTP非安全上下文：crypto.randomUUID在非HTTPS且非localhost的页面不可用 */
+function makeId(){
+  try { if (window.crypto && typeof window.crypto.randomUUID === 'function') return window.crypto.randomUUID(); } catch(e) {}
+  return 's-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10) + '-' + Math.random().toString(36).slice(2, 8);
+}
+let sessionId = localStorage.getItem('tcm_session') || makeId();
 let busy = false;
 let authToken = localStorage.getItem('tcm_token') || '';
 let currentUser = null;
@@ -222,7 +228,7 @@ const log = () => $('chat-log');
 /* ---------------- 初始化 ---------------- */
 (async () => {
   try {
-    const r = await (await fetch('/api/info')).json();
+    const r = await (await fetch('api/info')).json();
     $('chip-model').textContent = '模型：' + (r.llm_available ? r.model : '离线');
     $('chip-kb').textContent = `知识库 ${r.kb.files} 文件 · 证型${r.data['证型']} · 中药${r.data['中药']} · 方剂${r.data['方剂']} · 红旗${r.data['红旗规则']}条`;
   } catch (e) { $('chip-model').textContent = '服务未连接'; }
@@ -253,7 +259,7 @@ function updateAuthUI(){
 async function refreshAuth(){
   if (!authToken){ currentUser = null; updateAuthUI(); return; }
   try{
-    const r = await (await fetch('/api/auth/me?token='+encodeURIComponent(authToken))).json();
+    const r = await (await fetch('api/auth/me?token='+encodeURIComponent(authToken))).json();
     currentUser = r.username ? r : null;
     if (!currentUser){ authToken=''; localStorage.removeItem('tcm_token'); }
   }catch(e){ /* 离线容忍 */ }
@@ -262,7 +268,7 @@ async function refreshAuth(){
 
 async function authRegister(){
   const username = $('a-user').value.trim(), password = $('a-pass').value;
-  const r = await (await fetch('/api/auth/register', {method:'POST',headers:{'Content-Type':'application/json'},
+  const r = await (await fetch('api/auth/register', {method:'POST',headers:{'Content-Type':'application/json'},
     body: JSON.stringify({username, password})})).json();
   if (r.error){ alert('注册失败：'+r.error); return; }
   await afterAuthOk(r, '注册成功');
@@ -270,7 +276,7 @@ async function authRegister(){
 
 async function authLogin(){
   const username = $('a-user').value.trim(), password = $('a-pass').value;
-  const r = await (await fetch('/api/auth/login', {method:'POST',headers:{'Content-Type':'application/json'},
+  const r = await (await fetch('api/auth/login', {method:'POST',headers:{'Content-Type':'application/json'},
     body: JSON.stringify({username, password})})).json();
   if (r.error){ alert('登录失败：'+r.error); return; }
   await afterAuthOk(r, '登录成功');
@@ -295,7 +301,7 @@ function authLogout(){
 async function importGuest(){
   if (!confirm('将游客档案导入当前账号（已有档案不覆盖）？')) return;
   try{
-    const r = await (await fetch('/api/auth/import-guest', {method:'POST',headers:{'Content-Type':'application/json'},
+    const r = await (await fetch('api/auth/import-guest', {method:'POST',headers:{'Content-Type':'application/json'},
       body: JSON.stringify({token: authToken})})).json();
     if (r.error){ alert('导入失败：'+r.error); return; }
     alert('已导入 '+r.imported+' 条游客档案');
@@ -306,7 +312,7 @@ async function importGuest(){
 /* ---------------- 用户画像 ---------------- */
 async function showProfile(){
   try{
-    const p = await (await fetch('/api/profile?token='+encodeURIComponent(authToken))).json();
+    const p = await (await fetch('api/profile?token='+encodeURIComponent(authToken))).json();
     if (p.error){ alert('请先登录'); return; }
     window._recId = null;
     $('m-title').textContent = `📊 健康画像 · ${p.username}`;
@@ -342,7 +348,7 @@ async function showProfile(){
 }
 
 function newSession(withNotice){
-  sessionId = crypto.randomUUID();
+  sessionId = makeId();
   localStorage.setItem('tcm_session', sessionId);
   log().innerHTML = '';
   if (withNotice) addBot('已开始新会话（上次问诊已自动存入健康档案，可随时点开回看）。请描述您的主要症状。');
@@ -376,7 +382,7 @@ async function sendMsg(force=false){
   if (text) addUser(force ? text + '（请求立即辨证）' : text);
   setThinking(true);
   try{
-    const r = await fetch('/api/chat', {
+    const r = await fetch('api/chat', {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
         session: sessionId, message: text || '请立即给出辨证分析', force, token: authToken,
@@ -459,7 +465,7 @@ async function demo(text){
   $('msg-input').value='';
   setThinking(true);
   try{
-    const r = await fetch('/api/chat', {
+    const r = await fetch('api/chat', {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({session: sessionId, message: text, token: authToken, sex:$('p-sex').value||null,
         age: $('p-age').value?Number($('p-age').value):null, pregnant: $('p-preg').checked||null})
@@ -474,7 +480,7 @@ async function runQuery(){
   const q = $('q-input').value.trim(); if(!q) return;
   const box = $('q-result'); box.innerHTML = '<div class="item">查询中…</div>';
   try{
-    const resp = await fetch('/api/query',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q,mode:$('q-mode').value})});
+    const resp = await fetch('api/query',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q,mode:$('q-mode').value})});
     const r = await resp.json();
     renderQuery(r);
   }catch(e){ box.innerHTML = '<div class="item">查询失败：'+e.message+'</div>'; }
@@ -498,7 +504,7 @@ async function runHerb(){
   const herbs = raw.split(/[,，、\s]+/).filter(Boolean);
   const box = $('h-result'); box.innerHTML='<div class="item">检查中…</div>';
   try{
-    const resp = await fetch('/api/herb-safety',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({herbs,pregnant:$('h-preg').checked})});
+    const resp = await fetch('api/herb-safety',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({herbs,pregnant:$('h-preg').checked})});
     const r = await resp.json();
     let h = `<div class="item"><b class="${r.is_safe?'herb-ok':'herb-bad'}">${r.is_safe?'✓ 未检出配伍禁忌':'⚠ 检出配伍问题'}</b><br>${r.advice}`;
     if ((r.conflicts||[]).length) h += `<br><br>禁忌：<ul class="dot">${r.conflicts.map(c=>`<li>${c}</li>`).join('')}</ul>`;
@@ -519,7 +525,7 @@ function fmtTime(t){
 
 async function loadRecords(){
   try{
-    const r = await (await fetch('/api/records'+(authToken?'?token='+encodeURIComponent(authToken):''))).json();
+    const r = await (await fetch('api/records'+(authToken?'?token='+encodeURIComponent(authToken):''))).json();
     const box = $('r-list');
     if (!(r.records||[]).length){ box.innerHTML='<div class="t" style="color:var(--muted)">暂无档案，完成一次问诊后自动生成</div>'; return; }
     box.innerHTML = r.records.map(x=>`
@@ -533,7 +539,7 @@ async function loadRecords(){
 
 async function openRecord(id){
   try{
-    const rec = await (await fetch('/api/records/'+id+(authToken?'?token='+encodeURIComponent(authToken):''))).json();
+    const rec = await (await fetch('api/records/'+id+(authToken?'?token='+encodeURIComponent(authToken):''))).json();
     if (rec.error){ alert('档案不存在'); return; }
     window._recId = id;
     const p = rec.patient||{};
@@ -558,7 +564,7 @@ async function openRecord(id){
 async function delRecord(){
   if (!window._recId || !confirm('确定删除该档案？删除后不可恢复。')) return;
   try{
-    await fetch('/api/records/'+window._recId+(authToken?'?token='+encodeURIComponent(authToken):''), {method:'DELETE'});
+    await fetch('api/records/'+window._recId+(authToken?'?token='+encodeURIComponent(authToken):''), {method:'DELETE'});
     closeModal(); loadRecords();
   }catch(e){ alert('删除失败：'+e.message); }
 }
@@ -567,7 +573,7 @@ async function delRecord(){
 async function resumeRecord(id, silent=false){
   if (!id) return;
   try{
-    const rec = await (await fetch('/api/records/'+id+(authToken?'?token='+encodeURIComponent(authToken):''))).json();
+    const rec = await (await fetch('api/records/'+id+(authToken?'?token='+encodeURIComponent(authToken):''))).json();
     if (rec.error){
       if (!silent) alert('档案不存在');
       return;
